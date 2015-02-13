@@ -9,6 +9,7 @@ Rails.application.routes.draw do
 
   get '/talk' => 'npcs#index'
   get '/talk/trading/:id' => 'npcs#show'
+  get '/talk/buy/:id' => 'npcs#buy'
   # get '/talk/requirements/:id'
   # get '/talk/trading/:id'
   # get '/talk/buy/:id'
