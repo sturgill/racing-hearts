@@ -7,8 +7,12 @@ class TownsController < ApplicationController
   def update
     town_id = user_params[:id].upcase
     if current_user.valid_destinations.collect{ |d| d[:id].upcase }.include?(town_id)
-      message = current_user.initiate_travel_event(town_id)
-      render json: {:status => "ok", :message => message}
+      message, dead = current_user.initiate_travel_event(town_id)
+      if dead
+        render json: {:status => "error", :message => message + "\nYou have run out of hearts! Game over!"}
+      else
+        render json: {:status => "ok", :message => message}
+      end
     else
       render json: {:status => "error", :message => "Invalid destination"}
     end

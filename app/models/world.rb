@@ -13,9 +13,11 @@ class World
   def initialize
     @towns = ALL_TOWNS.map{ |key, val| Town.new(key, val) }
 
-    @ncps = Dir.glob(File.join Rails.root, 'lib', 'npcs',  '*.yml').collect do |file|
-      ncp_attrs = YAML.load_file(file)
-      town = @towns.find { |t| t.id == ncp_attrs['town'] }
+    file = File.join Rails.root, 'lib', 'npcs',  'npcs.yml'
+    yamls = YAML.load_file file
+
+    @ncps = yamls.collect do |ncp_attrs|
+      town = @towns.find { |t| t.id == ncp_attrs['town'].strip }
       Npc.new ncp_attrs, town
     end
   end

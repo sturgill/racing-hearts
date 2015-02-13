@@ -14,7 +14,7 @@ $.urlParam = function(name){
 }
 
 // Racing Hearts Server URL
-var RHS = 'http://racing-hearts.herokuapp.com/'
+var RHS = 'http://racing-hearts.herokuapp.com/';
 
 var game = function() {
   // These are not what is stored on the server, just some client side stats
@@ -27,7 +27,7 @@ var game = function() {
     chocolates: 0,
     silks: 0,
     jewels: 0,
-    current_town: {id:'A',name:'Replace me'}
+    current_town: {id:'A', name:'Replace me'}
   };
 
   function server(url, params, term, callback) {
@@ -71,16 +71,15 @@ var game = function() {
 
   function updateStats(term, callback){
     server('stat', {}, term, function(data){
-      var obj = $.parseJSON(data);
-      player.name = obj.name;
-      player.hearts = obj.hearts_cents;
-      player.perfumes = obj.perfumes;
-      player.roses = obj.roses;
-      player.chocolates = obj.chocolates;
-      player.silks = obj.silks;
-      player.jewels = obj.jewels;
-      player.current_town.id = obj.current_town.id;
-      player.current_town.name = obj.current_town.name;
+      player.name = data.name;
+      player.hearts = data.hearts;
+      player.perfumes = data.perfumes;
+      player.roses = data.roses;
+      player.chocolates = data.chocolates;
+      player.silks = data.silks;
+      player.jewels = data.jewels;
+      player.current_town.id = data.current_town.id;
+      player.current_town.name = data.current_town.name;
       //player.valentine = obj.valentine_identifier;
       callback();
     });
@@ -95,7 +94,7 @@ var game = function() {
 
     // Set our user's global UUID here
     player.uuid = uuid;
-    updateStats(term, callback);
+    callback();
   }
 
   function stat(term) {
@@ -110,50 +109,129 @@ var game = function() {
         "   Silks - " + player.silks + '\n'+
         "   Jewels - " + player.jewels + '\n'+
         " Current Town - " + player.current_town.name);
+        start(term);
     });
   };
 
-  function buy(term, npc) {
-    server('talk/buy/' + npc, {type:'', amount:1}, term, function(data){
-      term.pop();
-      term.pop();
-      start(term);
+  function amount(term, type, id, action)
+  {
+    term.echo('Please enter how many ' + type + ' you want to ' + action + '. [B]ack to change your item choice'); 
+    term.push(function(command) {
+      if ( Math.floor(command) == command && $.isNumeric(command) )
+      {
+        server('talk/' + action + '/' + id, {type: type, amount: command}, term, function(data) {
+          term.pop();
+          term.pop();
+          term.pop();
+          start(term);
+        });
+      }
+      else if ( command.match(/^(b|back)$/i) ) {
+        term.pop();
+      }
+      else {
+        term.echo('Error, ' + command + ' is not a valid option');
+        help(term);
+      }
+    }, {
+      prompt: '*> '
     });
   }
 
-  function sell(term) {
-    server('talk/sell/' + npc, {type:'', amount:1}, term, function(data){
-      term.pop();
-      term.pop();
-      start(term);
-    });
-  }
-
-  function valentine(term) {
-    server('talk/valentines/' + npc, {type:'', amount:1}, term, function(data){
-      term.echo(
-      ' _______                               ___ ___         __               __   __                     __ \n'+
-      '|   |   |.---.-.-----.-----.--.--.    |   |   |.---.-.|  |.-----.-----.|  |_|__|.-----.-----.-----.|  |\n'+
-      '|       ||  _  |  _  |  _  |  |  |    |   |   ||  _  ||  ||  -__|     ||   _|  ||     |  -__|__ --||__|\n'+
-      '|___|___||___._|   __|   __|___  |     \\_____/ |___._||__||_____|__|__||____|__||__|__|_____|_____||__|\n'+
-      '               |__|  |__|  |_____|                          DailyBurn Hackathon 2015!!!!\n');
-      term.pop();
-      term.pop();
-      start(term);
-    });
-  }
-
-  function requirements(term, name) {
-    server('talk/trading/' + name, {}, term, function(data) {
-      term.echo(data);
-      talking(term, name);
-    });
-  }
-
-  function talking(term, name) {
+  function trade(term, npc, units, action)
+  {
     function help(term) {
-      term.echo('[B]UY\n\tBuy an item from this person\n'+
-      '[S]ELL\n\tSell an item to this person\n'+
+      term.echo('[P]erfume - ' + units.perfumes + '\n' +
+        '[R]oses - ' + units.roses + '\n' +
+        '[C]hocolates - ' + units.chocolates + '\n' +
+        '[S]ilks - ' + units.silks + '\n' +
+        '[J]ewels - ' + units.jewels + '\n' + 
+        '[L]eave - Go back to town');
+    }
+
+    term.echo('Please select an item to ' + action);
+
+    term.push(function(command) {
+      if ( command.match(/^(p|perfume)$/i) ) {
+        amount(term, 'perfume', npc.id, action);
+      }
+      else if ( command.match(/^(r|roses)$/i) ) {
+        amount(term, 'roses', npc.id, action);
+      }
+      else if ( command.match(/^(c|chocolates)$/i) ) {
+        amount(term, 'chocolates', npc.id, action);
+      }
+      else if ( command.match(/^(s|silks)$/i) ) {
+        amount(term, 'silks', npc.id, action);
+      }
+      else if ( command.match(/^(j|jewels)$/i) ) {
+        amount(term, 'jewels', npc.id, action);
+      }
+      else if ( command.match(/^(l|leave)$/i) ) {
+        term.pop();
+        term.pop();
+        start(term);
+      }
+      else {
+        term.echo('Error, ' + command + ' is not a valid option');
+        help(term);
+      }
+    }, {
+      prompt: '*> '
+    });
+  }
+
+  function valentine(term, npc) {
+    server('talk/valentines/' + npc.id, {}, term, function(data){
+      if ( data.status == 'ok' ) {
+        term.echo(
+        ' _______                               ___ ___         __               __   __                     __ \n'+
+        '|   |   |.---.-.-----.-----.--.--.    |   |   |.---.-.|  |.-----.-----.|  |_|__|.-----.-----.-----.|  |\n'+
+        '|       ||  _  |  _  |  _  |  |  |    |   |   ||  _  ||  ||  -__|     ||   _|  ||     |  -__|__ --||__|\n'+
+        '|___|___||___._|   __|   __|___  |     \\_____/ |___._||__||_____|__|__||____|__||__|__|_____|_____||__|\n'+
+        '               |__|  |__|  |_____|                          DailyBurn Hackathon 2015!!!!\n');
+        term.pop();
+        term.pop();
+        start(term);
+      }
+      else
+      {
+        term.echo('Sorry, you do not have enough items to make ' + npc.name + ' your valentines.');
+      }
+    });
+  }
+
+  function requirements(term, npc) {
+    server('talk/trading/' + npc.id, {}, term, function(data) {
+      term.echo('Valentines requirements for ' + npc.name + ' - ');
+      term.echo(' Perfumes: ' + data.valentine.perfumes);
+      term.echo(' Roses: ' + data.valentine.roses);
+      term.echo(' Chocolates: ' + data.valentine.chocolates);
+      term.echo(' Silks: ' + data.valentine.silks);
+      term.echo(' Jewels: ' + data.valentine.jewels);
+
+      term.echo('Buy from ' + npc.name + ' -');
+      term.echo(' Perfumes: ' + data.buy.perfumes);
+      term.echo(' Roses: ' + data.buy.roses);
+      term.echo(' Chocolates: ' + data.buy.chocolates);
+      term.echo(' Silks: ' + data.buy.silks);
+      term.echo(' Jewels: ' + data.buy.jewels);
+
+      term.echo('Sell to ' + npc.name + ' -');
+      term.echo(' Perfumes: ' + data.sell.perfumes);
+      term.echo(' Roses: ' + data.sell.roses);
+      term.echo(' Chocolates: ' + data.sell.chocolates);
+      term.echo(' Silks: ' + data.sell.silks);
+      term.echo(' Jewels: ' + data.sell.jewels);
+
+      talking(term, npc, data.buy, data.sell);
+    });
+  }
+
+  function talking(term, npc, buy, sell) {
+    function help(term) {
+      term.echo('[B]UY\n\tBuy items for hearts\n'+
+      '[S]ELL\n\tSell items to gain hearts\n'+
       '[V]ALENTINE\n\tAsk this person to be your valentine\n'+
       '[L]EAVE\n\tLeave this person');
     }
@@ -166,13 +244,13 @@ var game = function() {
     term.echo('Talking to ' + name + '\nType [H]ELP for commands.');
     term.push(function(command) {
       if ( command.match(/^(b|buy)$/i) ) {
-        buy(term);
+        trade(term, npc, buy, 'buy');
       }
       else if ( command.match(/^(s|sell)$/i) ) {
-        sell(term);
+        trade(term, npc, sell, 'buy');
       }
       else if ( command.match(/^(v|valentine)$/i) ) {
-        valentine(term);
+        valentine(term, npc);
       }
       else if ( command.match(/^(h|help)$/i) ) {
         help(term);
@@ -231,11 +309,16 @@ var game = function() {
   function travelling(term, destination) {
     term.echo("Travelling to " + destination.name);
     server('travel/' + destination.id, {}, term, function(data){
-      term.echo(data);
-      term.echo("You were ambushed by heart bandits!! You lost 25 hearts");
-      term.echo("You have arrived at " + destination.name);
-      term.pop();
-      start(term);
+      if ( data.status == 'ok' )
+      {
+        term.echo(data.message);
+        term.echo("You have arrived at " + destination.name);
+        term.pop();
+      }
+      else
+      {
+        term.echo('Sorry, ' + destination.name + ' could not be travelled to.');
+      }
     });
   }
 
@@ -245,9 +328,6 @@ var game = function() {
     }
 
     server('travel', {}, term, function(data) {
-      var obj = $.parseJSON(data);
-
-      term.echo(data);
       term.echo(
         '          @AAAA@           @CCCC@\n' +
         '        @  A  A  @       @  C  C  @\n' +
@@ -270,19 +350,20 @@ var game = function() {
         '                    @ @\n' +
         '                     @\n');
 
-      term.echo('You are currently in: ' + obj.current_location);
-      term.echo('Valid destinations: ' + obj.valid_destinations.map(function(e){return e.name;}));
-      term.echo('Where would you like to travel to?    CA[N]CEL to go back');
+      term.echo('You are currently in: ' + data.current_location);
+      term.echo('Valid destinations: ' + data.valid_destinations.map(function(e){return e.name;}).join(', '));
+      term.echo('Where would you like to travel to? [C]ancel to go back');
 
       term.push(function(command) {
-        for ( var i = 0; i < valid_destinations.length; i++ )
+        for ( var i = 0; i < data.valid_destinations.length; i++ )
         {
-          if ( command.match(new RegExp(valid_destinations[i].name, 'i')) ){
-            travelling(term, valid_destinations[i]);
+          if ( command.match(new RegExp(data.valid_destinations[i].name, 'i')) ){
+            travelling(term, data.valid_destinations[i]);
+            stat(term);
             return;
           }
         }
-        if ( command.match(/^(n|cancel)$/i) ) {
+        if ( command.match(/^(c|cancel)$/i) ) {
           start(term);
           term.pop();
         }
@@ -331,8 +412,7 @@ var game = function() {
       onInit: function(term) {
         login(term, function(data) {
           greetings(term);
-          stat(term); // get our player statistics from the server
-          start(term);  
+          stat(term);
         }); // login to our server
       }
     });
