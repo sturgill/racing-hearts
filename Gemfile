@@ -8,9 +8,11 @@ gem 'rails-api'
 gem 'spring', :group => :development
 
 
-gem 'pg'
+gem 'pg', :group => :production
+gem 'mysql2', :group => :development
 gem 'figaro'
 gem 'omniauth-github'
+gem 'money-rails'
 
 
 
