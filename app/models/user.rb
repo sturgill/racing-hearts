@@ -1,0 +1,17 @@
+  # :name (string)
+  # :password (md5)
+  # :sessionid (simple guid)
+  # :age (int)
+  # :eyecolor (string)
+  # :haircolor (string)
+  # :hearts     (int)
+  # :perfumes   (int)
+  # :roses      (int)
+  # :chocolates (int)
+  # :silks      (int)
+  # :jewels     (int)
+  # :current_town (string)
+  # :valentine  (string)
+  # :admin     (bool)
+class User
+end
