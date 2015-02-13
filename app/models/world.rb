@@ -12,6 +12,12 @@ class World
 
   def initialize
     @towns = ALL_TOWNS.map{ |key, val| Town.new(key, val) }
+
+    @ncps = Dir.glob(File.join Rails.root, 'lib', 'npcs',  '*.yml').collect do |file|
+      ncp_attrs = YAML.load_file(file)
+      town = @towns.find { |t| t.id == ncp_attrs['town'] }
+      Npc.new ncp_attrs, town
+    end
   end
 
   def neighbors_for_town(current_town_id) 

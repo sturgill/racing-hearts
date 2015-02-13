@@ -7,10 +7,47 @@
 # :buy back ratio (number)
 # :current_town (string)
 
-attr_accessor :id, :name, :town
-
 class Npc
-  def initialize(id, name, town)
-    @id, @name, @town = id, name, town
+  attr_reader :id, :name, :town
+
+  def initialize(attrs, town)
+    @id = attrs['id']
+    @name = attrs['name']
+    @town = town
+    @buy = attrs['buy']
+    @sell = attrs['sell']
+    @valentine = attrs['valentine']
+    town.add_npc self
+  end
+
+  def can_valentine?(user)
+    return false if user.perfumes < @valentine['perfumes']
+    return false if user.roses < @valentine['roses']
+    return false if user.chocolates < @valentine['chocolates']
+    return false if user.silks < @valentine['silks']
+    return false if user.jewels < @valentine['jewels']
+    true
+  end
+
+  def sell_to_user(user, thing, number)
+    cost = (@buy[thing].to_f * 100).to_i * number
+    return false if user.hearts_cents < cost
+    User.transaction do
+      user.increment(thing, number)
+      user.decrement(:hearts_cents, cost)
+    end
+  end
+
+  def buy_from_user(user, thing, number)
+    cost = (@sell[thing].to_f * 100).to_i * number
+    User.transaction do
+      user.decrement(thing, number)
+      user.increment(:heart_cents, number)
+    end
+  end
+
+  def valentine!(user)
+    return false unless can_valentine?(user)
+    user.update_attribute :valentine_identifier, @id
   end
 end

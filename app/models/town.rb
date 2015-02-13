@@ -7,6 +7,10 @@ class Town
   def initialize(id, name)
     @id = id
     @name = name
-    @npcs = # something here
+    @npcs = []
+  end
+
+  def add_npc(npc)
+    @npcs << npc
   end
 end
