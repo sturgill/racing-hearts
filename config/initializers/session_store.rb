@@ -1,0 +1,1 @@
+RacingHearts::Application.config.session_store :cookie_store, :key => '_racing_hearts_session_'

@@ -22,5 +22,8 @@ module RacingHearts
 
     # Do not swallow errors in after_commit/after_rollback callbacks.
     config.active_record.raise_in_transactional_callbacks = true
+
+    # For omniauth
+    config.middleware.use config.session_store, config.session_options
   end
 end
