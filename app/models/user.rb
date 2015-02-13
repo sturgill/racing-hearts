@@ -46,6 +46,7 @@ class User < ActiveRecord::Base
       return message, true
     else
       return message, false
+    end
   end
 
   def sub_hearts(amount)
