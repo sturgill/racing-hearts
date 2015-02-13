@@ -3,6 +3,6 @@ Rails.application.routes.draw do
   get '/logout' => 'sessions#destroy'
   get '/login', to: redirect('/auth/github')
 
-  post '/travel' => 'town#index'
-  post '/travel:id' => 'town#update'
+  get '/travel' => 'towns#index'
+  get '/travel:id' => 'towns#update'
 end

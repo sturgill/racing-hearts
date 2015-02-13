@@ -1,7 +1,10 @@
 class User < ActiveRecord::Base
   before_create :generate_uuid
-  validate :email, presence: true # uniqueness constraint enforced by database
+  before_create :setup_resources
+
+  validates :email, presence: true # uniqueness constraint enforced by database
   # uniquness constraint on uuid enforced by database -- if that fails we have bigger problems...
+  validates :town_identifier, presence: true, inclusion: { in: World::ALL_TOWNS }
 
   monetize :hearts_cents
 
@@ -14,7 +17,7 @@ class User < ActiveRecord::Base
   end
 
   def world
-    @world ||= World.new
+    @world ||= ::World.new
   end
 
   def current_location
@@ -33,5 +36,10 @@ class User < ActiveRecord::Base
 
   def generate_uuid
     self.uuid = SecureRandom.uuid
+  end
+
+  def setup_resources
+    self.current_town_identifier = World::ALL_TOWNS.keys.sample
+    self.hearts_cents = 50000
   end
 end
