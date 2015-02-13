@@ -41,7 +41,6 @@ class User < ActiveRecord::Base
     action = travel_events.sample
     message = self.send(action)
     self.current_town_identifier = new_location
-    puts message
     self.save!
     return message
   end
