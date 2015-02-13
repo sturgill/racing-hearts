@@ -1,7 +1,7 @@
 class CreateUsers < ActiveRecord::Migration
   def change
     create_table :users do |t|
-      t.string :email, unique: true
+      t.string :email
       t.string :uuid, unique: true, default: nil
       t.money :hearts, default: 0
       t.integer :perfumes, default: 0
