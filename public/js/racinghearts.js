@@ -47,23 +47,6 @@ var game = function() {
     });  
   }
 
-  // login using our cookie?
-  function login(term, callback) {
-    var uuid = $.urlParam('uuid');
-    if ( uuid == null ) {
-      window.location.href = './index.html';
-      return;
-    }
-
-    // Set our user's global UUID here
-    player.uuid = uuid;
-
-    server('stat', {}, term, function(data) {
-      // set user details here... possibly...
-      callback();
-    });
-  }
-
   //to show greetings after clearing the terminal
   function greetings(term) {
       term.echo(
@@ -86,19 +69,46 @@ var game = function() {
               '[C]LEAR\n\tClear this terminal');
   };
 
-  function stat(term) {
-    term.echo('Displaying users current stats');
-    term.echo("Player Name - " + player.username + '\n'+
-      "Hearts - " + player.hearts + '\n'+
-      "Perfume - " + player.perfume + '\n'+
-      "Roses - " + player.roses + '\n'+
-      "Chocolates - " + player.chocolates + '\n'+
-      "Silks - " + player.silks + '\n'+
-      "Jewels - " + player.jewels + '\n'+
-      "Current Town - " + player.currentTown);
-
+  function updateStats(term, callback){
     server('stat', {}, term, function(data){
-      term.echo(data);
+      var obj = $.parseJSON(data);
+      player.name = obj.name;
+      player.hearts = obj.hearts_cents;
+      player.perfumes = obj.perfumes;
+      player.roses = obj.roses;
+      player.chocolates = obj.chocolates;
+      player.silks = obj.silks;
+      player.jewels = obj.jewels;
+      player.current_town_id = obj.current_town_identifier;
+      player.current_town = obj.current_town;
+      player.valentine = obj.valentine_identifier;
+      callback();
+    });
+  }
+
+  function login(term, callback) {
+    var uuid = $.urlParam('uuid');
+    if ( uuid == null ) {
+      window.location.href = './index.html';
+      return;
+    }
+
+    // Set our user's global UUID here
+    player.uuid = uuid;
+    updateStats(term, callback);
+  }
+
+  function stat(term) {
+    updateStats(term, function(){
+      term.echo('Displaying users current stats');
+      term.echo("Player Name - " + player.name + '\n'+
+        "Hearts - " + player.hearts + '\n'+
+        "Perfume - " + player.perfume + '\n'+
+        "Roses - " + player.roses + '\n'+
+        "Chocolates - " + player.chocolates + '\n'+
+        "Silks - " + player.silks + '\n'+
+        "Jewels - " + player.jewels + '\n'+
+        "Current Town - " + player.current_town);
     });
   };
 
@@ -234,6 +244,8 @@ var game = function() {
     }
 
     server('travel', {}, term, function(data) {
+      var obj = $.parseJSON(data);
+
       term.echo(data);
       term.echo(
         '          @AAAA@           @CCCC@\n' +
@@ -255,32 +267,31 @@ var game = function() {
         '                @  E   E  @\n' +
         '                  @EEEEE@\n' +
         '                    @ @\n' +
-        '                     @\n\n' +
-        'You are currently in : A\n' +
-        'Valid destinations: F, B\n\n' +
-        'Where would you like to travel to?    CA[N]CEL to go back');
+        '                     @\n');
 
-      var validDestinations = ['F','B'];
+      term.echo('You are currently in: ' + obj.current_location);
+      term.echo('Valid destinations: ' + obj.valid_destinations.map(function(e){return e.name;}));
+      term.echo('Where would you like to travel to?    CA[N]CEL to go back');
 
-      term.push(function(command) {
-        for ( var i = 0; i < validDestinations.length ; i++ )
-        {
-          if ( command.match(new RegExp(validDestinations[i], 'i')) ){
-            travelling(term, validDestinations[i]);
-            return;
-          }
-        }
+      // term.push(function(command) {
+      //   for ( var i = 0; i < ; i++ )
+      //   {
+      //     if ( command.match(new RegExp(validDestinations[i], 'i')) ){
+      //       travelling(term, validDestinations[i]);
+      //       return;
+      //     }
+      //   }
 
-        if ( command.match(/^(n|cancel)$/i) ) {
-          start(term);
-          term.pop();
-        }
-        else {
-          notAvailable(term, command);
-        }
-      },{
-        prompt: '*> '
-      });
+      //   if ( command.match(/^(n|cancel)$/i) ) {
+      //     start(term);
+      //     term.pop();
+      //   }
+      //   else {
+      //     notAvailable(term, command);
+      //   }
+      // },{
+      //   prompt: '*> '
+      // });
     });
   }
 
