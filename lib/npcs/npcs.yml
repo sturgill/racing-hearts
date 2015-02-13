@@ -1,0 +1,883 @@
+---
+- id: 1
+  name: Robert,
+  town: A
+  buy:
+    perfumes: 1.57
+    roses: 8.53
+    chocolates: 4.47
+    silks: 8.86
+    jewels: 5.38
+  sell:
+    perfumes: 1.18
+    roses: 6.4
+    chocolates: 3.35
+    silks: 6.65
+    jewels: 4.04
+  valentine:
+    perfumes: 8
+    roses: 27
+    chocolates: 9
+    silks: 6
+    jewels: 29
+- id: 2
+  name: Joe,
+  town: A
+  buy:
+    perfumes: 8.96
+    roses: 6.11
+    chocolates: 5.48
+    silks: 8.28
+    jewels: 7.14
+  sell:
+    perfumes: 6.72
+    roses: 4.58
+    chocolates: 4.11
+    silks: 6.21
+    jewels: 5.36
+  valentine:
+    perfumes: 29
+    roses: 27
+    chocolates: 14
+    silks: 11
+    jewels: 7
+- id: 3
+  name: Margaret,
+  town: A
+  buy:
+    perfumes: 1.97
+    roses: 5.69
+    chocolates: 8.3
+    silks: 2.1
+    jewels: 0.5
+  sell:
+    perfumes: 1.48
+    roses: 4.27
+    chocolates: 6.23
+    silks: 1.58
+    jewels: 0.38
+  valentine:
+    perfumes: 38
+    roses: 22
+    chocolates: 35
+    silks: 5
+    jewels: 0
+- id: 4
+  name: Paul,
+  town: A
+  buy:
+    perfumes: 2.19
+    roses: 3.61
+    chocolates: 8.82
+    silks: 1.26
+    jewels: 6.99
+  sell:
+    perfumes: 1.64
+    roses: 2.71
+    chocolates: 6.62
+    silks: 0.95
+    jewels: 5.24
+  valentine:
+    perfumes: 18
+    roses: 38
+    chocolates: 38
+    silks: 6
+    jewels: 0
+- id: 5
+  name: Susan,
+  town: A
+  buy:
+    perfumes: 9.11
+    roses: 9.33
+    chocolates: 7.01
+    silks: 3.51
+    jewels: 1.78
+  sell:
+    perfumes: 6.83
+    roses: 7.0
+    chocolates: 5.26
+    silks: 2.63
+    jewels: 1.34
+  valentine:
+    perfumes: 15
+    roses: 3
+    chocolates: 36
+    silks: 13
+    jewels: 11
+- id: 6
+  name: Katie,
+  town: A
+  buy:
+    perfumes: 6.67
+    roses: 8.04
+    chocolates: 2.64
+    silks: 8.59
+    jewels: 8.97
+  sell:
+    perfumes: 5.0
+    roses: 6.03
+    chocolates: 1.98
+    silks: 6.44
+    jewels: 6.73
+  valentine:
+    perfumes: 19
+    roses: 18
+    chocolates: 17
+    silks: 11
+    jewels: 32
+- id: 7
+  name: Madison,
+  town: B
+  buy:
+    perfumes: 2.17
+    roses: 4.91
+    chocolates: 8.91
+    silks: 0.72
+    jewels: 2.7
+  sell:
+    perfumes: 1.63
+    roses: 3.68
+    chocolates: 6.68
+    silks: 0.54
+    jewels: 2.03
+  valentine:
+    perfumes: 24
+    roses: 11
+    chocolates: 24
+    silks: 12
+    jewels: 16
+- id: 8
+  name: Ethan,
+  town: B
+  buy:
+    perfumes: 0.59
+    roses: 8.67
+    chocolates: 0.75
+    silks: 3.55
+    jewels: 1.57
+  sell:
+    perfumes: 0.44
+    roses: 6.5
+    chocolates: 0.56
+    silks: 2.66
+    jewels: 1.18
+  valentine:
+    perfumes: 21
+    roses: 13
+    chocolates: 12
+    silks: 3
+    jewels: 1
+- id: 9
+  name: Samantha,
+  town: B
+  buy:
+    perfumes: 7.35
+    roses: 2.17
+    chocolates: 5.8
+    silks: 0.28
+    jewels: 1.91
+  sell:
+    perfumes: 5.51
+    roses: 1.63
+    chocolates: 4.35
+    silks: 0.21
+    jewels: 1.43
+  valentine:
+    perfumes: 37
+    roses: 36
+    chocolates: 24
+    silks: 3
+    jewels: 0
+- id: 10
+  name: Betty,
+  town: B
+  buy:
+    perfumes: 0.51
+    roses: 8.02
+    chocolates: 3.95
+    silks: 2.23
+    jewels: 8.61
+  sell:
+    perfumes: 0.38
+    roses: 6.02
+    chocolates: 2.96
+    silks: 1.67
+    jewels: 6.46
+  valentine:
+    perfumes: 22
+    roses: 35
+    chocolates: 38
+    silks: 5
+    jewels: 0
+- id: 11
+  name: James,
+  town: B
+  buy:
+    perfumes: 7.1
+    roses: 1.13
+    chocolates: 7.16
+    silks: 2.12
+    jewels: 0.66
+  sell:
+    perfumes: 5.32
+    roses: 0.85
+    chocolates: 5.37
+    silks: 1.59
+    jewels: 0.5
+  valentine:
+    perfumes: 27
+    roses: 17
+    chocolates: 23
+    silks: 6
+    jewels: 27
+- id: 12
+  name: Jessica,
+  town: B
+  buy:
+    perfumes: 2.93
+    roses: 8.39
+    chocolates: 7.0
+    silks: 8.63
+    jewels: 2.24
+  sell:
+    perfumes: 2.2
+    roses: 6.29
+    chocolates: 5.25
+    silks: 6.47
+    jewels: 1.68
+  valentine:
+    perfumes: 14
+    roses: 28
+    chocolates: 17
+    silks: 18
+    jewels: 1
+- id: 13
+  name: John,
+  town: C
+  buy:
+    perfumes: 2.72
+    roses: 3.3
+    chocolates: 1.11
+    silks: 6.99
+    jewels: 5.55
+  sell:
+    perfumes: 2.04
+    roses: 2.47
+    chocolates: 0.83
+    silks: 5.24
+    jewels: 4.16
+  valentine:
+    perfumes: 39
+    roses: 11
+    chocolates: 18
+    silks: 14
+    jewels: 18
+- id: 14
+  name: Mary,
+  town: C
+  buy:
+    perfumes: 2.24
+    roses: 7.45
+    chocolates: 2.67
+    silks: 1.85
+    jewels: 0.58
+  sell:
+    perfumes: 1.68
+    roses: 5.59
+    chocolates: 2.0
+    silks: 1.39
+    jewels: 0.43
+  valentine:
+    perfumes: 11
+    roses: 19
+    chocolates: 3
+    silks: 13
+    jewels: 2
+- id: 15
+  name: Sandra,
+  town: C
+  buy:
+    perfumes: 9.64
+    roses: 5.93
+    chocolates: 8.14
+    silks: 5.8
+    jewels: 7.77
+  sell:
+    perfumes: 7.23
+    roses: 4.45
+    chocolates: 6.11
+    silks: 4.35
+    jewels: 5.83
+  valentine:
+    perfumes: 28
+    roses: 17
+    chocolates: 40
+    silks: 5
+    jewels: 10
+- id: 16
+  name: Carol,
+  town: C
+  buy:
+    perfumes: 0.72
+    roses: 6.53
+    chocolates: 6.81
+    silks: 9.53
+    jewels: 4.21
+  sell:
+    perfumes: 0.54
+    roses: 4.9
+    chocolates: 5.11
+    silks: 7.15
+    jewels: 3.16
+  valentine:
+    perfumes: 22
+    roses: 13
+    chocolates: 5
+    silks: 23
+    jewels: 12
+- id: 17
+  name: Karen,
+  town: C
+  buy:
+    perfumes: 2.17
+    roses: 2.53
+    chocolates: 7.61
+    silks: 3.63
+    jewels: 4.5
+  sell:
+    perfumes: 1.63
+    roses: 1.9
+    chocolates: 5.71
+    silks: 2.72
+    jewels: 3.38
+  valentine:
+    perfumes: 38
+    roses: 4
+    chocolates: 39
+    silks: 9
+    jewels: 5
+- id: 18
+  name: Lisa,
+  town: C
+  buy:
+    perfumes: 5.21
+    roses: 0.28
+    chocolates: 3.57
+    silks: 7.51
+    jewels: 2.71
+  sell:
+    perfumes: 3.91
+    roses: 0.21
+    chocolates: 2.68
+    silks: 5.63
+    jewels: 2.03
+  valentine:
+    perfumes: 10
+    roses: 13
+    chocolates: 13
+    silks: 13
+    jewels: 27
+- id: 19
+  name: Charles,
+  town: D
+  buy:
+    perfumes: 7.53
+    roses: 7.57
+    chocolates: 8.51
+    silks: 6.73
+    jewels: 7.99
+  sell:
+    perfumes: 5.65
+    roses: 5.68
+    chocolates: 6.38
+    silks: 5.05
+    jewels: 5.99
+  valentine:
+    perfumes: 28
+    roses: 8
+    chocolates: 26
+    silks: 38
+    jewels: 0
+- id: 20
+  name: Nancy,
+  town: D
+  buy:
+    perfumes: 5.4
+    roses: 4.33
+    chocolates: 7.23
+    silks: 6.2
+    jewels: 2.98
+  sell:
+    perfumes: 4.05
+    roses: 3.25
+    chocolates: 5.42
+    silks: 4.65
+    jewels: 2.24
+  valentine:
+    perfumes: 30
+    roses: 5
+    chocolates: 4
+    silks: 15
+    jewels: 36
+- id: 21
+  name: Maria,
+  town: D
+  buy:
+    perfumes: 5.64
+    roses: 7.64
+    chocolates: 4.92
+    silks: 8.29
+    jewels: 9.59
+  sell:
+    perfumes: 4.23
+    roses: 5.73
+    chocolates: 3.69
+    silks: 6.22
+    jewels: 7.19
+  valentine:
+    perfumes: 25
+    roses: 9
+    chocolates: 34
+    silks: 8
+    jewels: 24
+- id: 22
+  name: Anthony,
+  town: D
+  buy:
+    perfumes: 9.98
+    roses: 9.38
+    chocolates: 4.8
+    silks: 4.9
+    jewels: 3.63
+  sell:
+    perfumes: 7.49
+    roses: 7.04
+    chocolates: 3.6
+    silks: 3.68
+    jewels: 2.72
+  valentine:
+    perfumes: 1
+    roses: 27
+    chocolates: 29
+    silks: 18
+    jewels: 23
+- id: 23
+  name: Richard,
+  town: D
+  buy:
+    perfumes: 2.33
+    roses: 7.25
+    chocolates: 9.03
+    silks: 2.91
+    jewels: 4.97
+  sell:
+    perfumes: 1.75
+    roses: 5.44
+    chocolates: 6.77
+    silks: 2.18
+    jewels: 3.73
+  valentine:
+    perfumes: 12
+    roses: 22
+    chocolates: 39
+    silks: 18
+    jewels: 9
+- id: 24
+  name: Tom,
+  town: D
+  buy:
+    perfumes: 3.3
+    roses: 4.58
+    chocolates: 3.91
+    silks: 8.79
+    jewels: 7.88
+  sell:
+    perfumes: 2.47
+    roses: 3.44
+    chocolates: 2.93
+    silks: 6.59
+    jewels: 5.91
+  valentine:
+    perfumes: 13
+    roses: 34
+    chocolates: 12
+    silks: 15
+    jewels: 26
+- id: 25
+  name: Ken,
+  town: E
+  buy:
+    perfumes: 8.16
+    roses: 8.58
+    chocolates: 2.69
+    silks: 2.24
+    jewels: 1.6
+  sell:
+    perfumes: 6.12
+    roses: 6.44
+    chocolates: 2.02
+    silks: 1.68
+    jewels: 1.2
+  valentine:
+    perfumes: 12
+    roses: 21
+    chocolates: 4
+    silks: 11
+    jewels: 3
+- id: 26
+  name: Jennifer,
+  town: E
+  buy:
+    perfumes: 7.52
+    roses: 0.39
+    chocolates: 9.21
+    silks: 2.14
+    jewels: 7.36
+  sell:
+    perfumes: 5.64
+    roses: 0.29
+    chocolates: 6.91
+    silks: 1.61
+    jewels: 5.52
+  valentine:
+    perfumes: 12
+    roses: 25
+    chocolates: 24
+    silks: 39
+    jewels: 0
+- id: 27
+  name: Tyler,
+  town: E
+  buy:
+    perfumes: 6.61
+    roses: 8.86
+    chocolates: 9.17
+    silks: 6.37
+    jewels: 9.86
+  sell:
+    perfumes: 4.96
+    roses: 6.65
+    chocolates: 6.88
+    silks: 4.78
+    jewels: 7.4
+  valentine:
+    perfumes: 36
+    roses: 28
+    chocolates: 36
+    silks: 0
+    jewels: 0
+- id: 28
+  name: George,
+  town: E
+  buy:
+    perfumes: 2.87
+    roses: 4.63
+    chocolates: 3.25
+    silks: 9.59
+    jewels: 6.05
+  sell:
+    perfumes: 2.15
+    roses: 3.47
+    chocolates: 2.44
+    silks: 7.19
+    jewels: 4.54
+  valentine:
+    perfumes: 11
+    roses: 2
+    chocolates: 30
+    silks: 28
+    jewels: 29
+- id: 29
+  name: Jason
+  town: E
+  buy:
+    perfumes: 1.89
+    roses: 7.44
+    chocolates: 9.81
+    silks: 3.97
+    jewels: 3.75
+  sell:
+    perfumes: 1.42
+    roses: 5.58
+    chocolates: 7.36
+    silks: 2.98
+    jewels: 2.81
+  valentine:
+    perfumes: 9
+    roses: 13
+    chocolates: 10
+    silks: 27
+    jewels: 10
+- id: 30
+  name: Chris,
+  town: E
+  buy:
+    perfumes: 4.67
+    roses: 1.78
+    chocolates: 0.55
+    silks: 3.45
+    jewels: 0.88
+  sell:
+    perfumes: 3.5
+    roses: 1.34
+    chocolates: 0.41
+    silks: 2.59
+    jewels: 0.66
+  valentine:
+    perfumes: 11
+    roses: 25
+    chocolates: 17
+    silks: 16
+    jewels: 8
+- id: 31
+  name: Mark,
+  town: F
+  buy:
+    perfumes: 6.06
+    roses: 3.57
+    chocolates: 7.95
+    silks: 5.55
+    jewels: 3.66
+  sell:
+    perfumes: 4.55
+    roses: 2.68
+    chocolates: 5.96
+    silks: 4.16
+    jewels: 2.75
+  valentine:
+    perfumes: 18
+    roses: 26
+    chocolates: 1
+    silks: 38
+    jewels: 17
+- id: 32
+  name: Steven,
+  town: F
+  buy:
+    perfumes: 2.02
+    roses: 6.45
+    chocolates: 2.71
+    silks: 4.08
+    jewels: 4.42
+  sell:
+    perfumes: 1.52
+    roses: 4.84
+    chocolates: 2.03
+    silks: 3.06
+    jewels: 3.32
+  valentine:
+    perfumes: 7
+    roses: 33
+    chocolates: 32
+    silks: 18
+    jewels: 10
+- id: 33
+  name: Dan,
+  town: F
+  buy:
+    perfumes: 9.74
+    roses: 7.01
+    chocolates: 9.23
+    silks: 9.88
+    jewels: 8.33
+  sell:
+    perfumes: 7.31
+    roses: 5.26
+    chocolates: 6.92
+    silks: 7.41
+    jewels: 6.25
+  valentine:
+    perfumes: 28
+    roses: 29
+    chocolates: 11
+    silks: 11
+    jewels: 21
+- id: 34
+  name: Andrew,
+  town: F
+  buy:
+    perfumes: 4.38
+    roses: 9.89
+    chocolates: 3.13
+    silks: 3.73
+    jewels: 3.03
+  sell:
+    perfumes: 3.29
+    roses: 7.42
+    chocolates: 2.35
+    silks: 2.8
+    jewels: 2.27
+  valentine:
+    perfumes: 4
+    roses: 11
+    chocolates: 27
+    silks: 23
+    jewels: 19
+- id: 35
+  name: Barbara,
+  town: F
+  buy:
+    perfumes: 4.96
+    roses: 1.62
+    chocolates: 7.48
+    silks: 4.92
+    jewels: 4.71
+  sell:
+    perfumes: 3.72
+    roses: 1.22
+    chocolates: 5.61
+    silks: 3.69
+    jewels: 3.53
+  valentine:
+    perfumes: 9
+    roses: 22
+    chocolates: 16
+    silks: 17
+    jewels: 20
+- id: 36
+  name: Olivia,
+  town: F
+  buy:
+    perfumes: 9.41
+    roses: 5.49
+    chocolates: 7.92
+    silks: 8.34
+    jewels: 7.34
+  sell:
+    perfumes: 7.06
+    roses: 4.12
+    chocolates: 5.94
+    silks: 6.26
+    jewels: 5.51
+  valentine:
+    perfumes: 27
+    roses: 40
+    chocolates: 11
+    silks: 22
+    jewels: 0
+- id: 37
+  name: Don,
+  town: G
+  buy:
+    perfumes: 3.93
+    roses: 8.3
+    chocolates: 3.53
+    silks: 0.18
+    jewels: 9.68
+  sell:
+    perfumes: 2.95
+    roses: 6.23
+    chocolates: 2.65
+    silks: 0.14
+    jewels: 7.26
+  valentine:
+    perfumes: 20
+    roses: 39
+    chocolates: 10
+    silks: 31
+    jewels: 0
+- id: 38
+  name: Helen,
+  town: G
+  buy:
+    perfumes: 8.27
+    roses: 6.69
+    chocolates: 7.71
+    silks: 7.43
+    jewels: 0.35
+  sell:
+    perfumes: 6.2
+    roses: 5.02
+    chocolates: 5.78
+    silks: 5.57
+    jewels: 0.26
+  valentine:
+    perfumes: 30
+    roses: 11
+    chocolates: 38
+    silks: 6
+    jewels: 15
+- id: 39
+  name: Will,
+  town: G
+  buy:
+    perfumes: 8.83
+    roses: 8.79
+    chocolates: 6.82
+    silks: 5.08
+    jewels: 0.99
+  sell:
+    perfumes: 6.62
+    roses: 6.59
+    chocolates: 5.12
+    silks: 3.81
+    jewels: 0.74
+  valentine:
+    perfumes: 33
+    roses: 33
+    chocolates: 8
+    silks: 26
+    jewels: 0
+- id: 40
+  name: Dorothy,
+  town: G
+  buy:
+    perfumes: 9.81
+    roses: 9.15
+    chocolates: 8.07
+    silks: 1.05
+    jewels: 3.2
+  sell:
+    perfumes: 7.36
+    roses: 6.86
+    chocolates: 6.05
+    silks: 0.79
+    jewels: 2.4
+  valentine:
+    perfumes: 18
+    roses: 30
+    chocolates: 30
+    silks: 20
+    jewels: 2
+- id: 41
+  name: Jacob,
+  town: G
+  buy:
+    perfumes: 7.87
+    roses: 2.8
+    chocolates: 8.21
+    silks: 2.14
+    jewels: 4.6
+  sell:
+    perfumes: 5.9
+    roses: 2.1
+    chocolates: 6.16
+    silks: 1.61
+    jewels: 3.45
+  valentine:
+    perfumes: 16
+    roses: 35
+    chocolates: 16
+    silks: 12
+    jewels: 21
+- id: 42
+  name: Mike,
+  town: G
+  buy:
+    perfumes: 3.7
+    roses: 10.0
+    chocolates: 7.6
+    silks: 6.29
+    jewels: 8.13
+  sell:
+    perfumes: 2.78
+    roses: 7.5
+    chocolates: 5.7
+    silks: 4.72
+    jewels: 6.1
+  valentine:
+    perfumes: 23
+    roses: 8
+    chocolates: 30
+    silks: 3
+    jewels: 14
