@@ -1,0 +1,21 @@
+id: A
+name: Allison
+town: A
+buy:
+  perfumes: 0.25
+  roses: 1.3
+  chocolates: 2.49
+  silks: 0.17
+  jewels: 3.45
+sell:
+  perfumes: 0.2
+  roses: 1.1
+  chocolates: 2.21
+  silks: 0.16
+  jewels: 3.41
+valentine:
+  perfumes: 35
+  roses: 5
+  chocolates: 2
+  silks: 25
+  jewels: 10

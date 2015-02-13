@@ -2,14 +2,11 @@
 #  :links  (string of array?)
 
 class Town
-  attr_accessor :id, :name
+  attr_accessor :id, :name, :npcs
 
   def initialize(id, name)
     @id = id
     @name = name
-  end
-
-  def ncps
-    
+    @npcs = # something here
   end
 end

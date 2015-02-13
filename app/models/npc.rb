@@ -7,5 +7,10 @@
 # :buy back ratio (number)
 # :current_town (string)
 
+attr_reader :id, :name, :town
+
 class Npc
+  def initialize(id, name, town)
+    @id, @name, @town = id, name, town
+  end
 end
