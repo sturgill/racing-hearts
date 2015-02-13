@@ -20,14 +20,14 @@ var game = function() {
   // These are not what is stored on the server, just some client side stats
   var player = {
     username: 'Bob',
-    uuid: '000',
+    uuid: '00000-0000-0000-0000',
     hearts: 500.00,
     perfume: 0,
     roses: 0,
     chocolates: 0,
     silks: 0,
     jewels: 0,
-    currentTown: 'A'
+    current_town: {id:'A',name:'Replace me'}
   };
 
   function server(url, params, term, callback) {
@@ -79,9 +79,9 @@ var game = function() {
       player.chocolates = obj.chocolates;
       player.silks = obj.silks;
       player.jewels = obj.jewels;
-      player.current_town_id = obj.current_town_identifier;
-      player.current_town = obj.current_town;
-      player.valentine = obj.valentine_identifier;
+      player.current_town.id = obj.current_town.id;
+      player.current_town.name = obj.current_town.name;
+      //player.valentine = obj.valentine_identifier;
       callback();
     });
   }
@@ -89,7 +89,7 @@ var game = function() {
   function login(term, callback) {
     var uuid = $.urlParam('uuid');
     if ( uuid == null ) {
-      window.location.href = './index.html';
+      window.location.href = '/login';
       return;
     }
 
@@ -100,15 +100,16 @@ var game = function() {
 
   function stat(term) {
     updateStats(term, function(){
-      term.echo('Displaying users current stats');
-      term.echo("Player Name - " + player.name + '\n'+
-        "Hearts - " + player.hearts + '\n'+
-        "Perfume - " + player.perfume + '\n'+
-        "Roses - " + player.roses + '\n'+
-        "Chocolates - " + player.chocolates + '\n'+
-        "Silks - " + player.silks + '\n'+
-        "Jewels - " + player.jewels + '\n'+
-        "Current Town - " + player.current_town);
+      term.echo('Displaying users current stats:');
+      term.echo(" Player Name - " + player.name + '\n'+
+        " Hearts - " + player.hearts + '\n'+
+        " Inventory:\n" +
+        "   Perfume - " + player.perfume + '\n'+
+        "   Roses - " + player.roses + '\n'+
+        "   Chocolates - " + player.chocolates + '\n'+
+        "   Silks - " + player.silks + '\n'+
+        "   Jewels - " + player.jewels + '\n'+
+        " Current Town - " + player.current_town.name);
     });
   };
 
@@ -228,11 +229,11 @@ var game = function() {
   }
 
   function travelling(term, destination) {
-    server('travel/' + destination, {}, term, function(data){
+    term.echo("Travelling to " + destination.name);
+    server('travel/' + destination.id, {}, term, function(data){
       term.echo(data);
-      term.echo("Travelling to " + destination);
       term.echo("You were ambushed by heart bandits!! You lost 25 hearts");
-      term.echo("You have arrived at " + destination);
+      term.echo("You have arrived at " + destination.name);
       term.pop();
       start(term);
     });
@@ -273,25 +274,24 @@ var game = function() {
       term.echo('Valid destinations: ' + obj.valid_destinations.map(function(e){return e.name;}));
       term.echo('Where would you like to travel to?    CA[N]CEL to go back');
 
-      // term.push(function(command) {
-      //   for ( var i = 0; i < ; i++ )
-      //   {
-      //     if ( command.match(new RegExp(validDestinations[i], 'i')) ){
-      //       travelling(term, validDestinations[i]);
-      //       return;
-      //     }
-      //   }
-
-      //   if ( command.match(/^(n|cancel)$/i) ) {
-      //     start(term);
-      //     term.pop();
-      //   }
-      //   else {
-      //     notAvailable(term, command);
-      //   }
-      // },{
-      //   prompt: '*> '
-      // });
+      term.push(function(command) {
+        for ( var i = 0; i < valid_destinations.length; i++ )
+        {
+          if ( command.match(new RegExp(valid_destinations[i].name, 'i')) ){
+            travelling(term, valid_destinations[i]);
+            return;
+          }
+        }
+        if ( command.match(/^(n|cancel)$/i) ) {
+          start(term);
+          term.pop();
+        }
+        else {
+          notAvailable(term, command);
+        }
+      },{
+        prompt: '*> '
+      });
     });
   }
 
