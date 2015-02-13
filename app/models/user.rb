@@ -1,11 +1,11 @@
 class User < ActiveRecord::Base
   include TravelEventAction
-  before_create :generate_uuid
-  before_create :setup_resources
+  before_validation :generate_uuid, on: :create
+  before_validation :setup_resources, on: :create
 
   validates :email, presence: true # uniqueness constraint enforced by database
   # uniquness constraint on uuid enforced by database -- if that fails we have bigger problems...
-  validates :current_town_identifier, presence: true, inclusion: { in: World::ALL_TOWNS }
+  validates :current_town_identifier, presence: true, inclusion: { in: World::ALL_TOWNS.keys }
 
   monetize :hearts_cents
 
