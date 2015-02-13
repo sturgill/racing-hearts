@@ -13,6 +13,7 @@ $.urlParam = function(name){
     }
 }
 
+// Racing Hearts Server URL
 var RHS = 'http://chris.thesturgills.com/racing-hearts/'
 
 var game = function() {
@@ -37,7 +38,7 @@ var game = function() {
       success: function( data ) {
         // perform a request to get the user statistics
         term.resume();
-        callback();
+        callback(data);
       },
       error: function(response){
         console.log(response);
@@ -50,12 +51,17 @@ var game = function() {
   function login(term, callback) {
     var uuid = $.urlParam('uuid');
     if ( uuid == null ) {
-      console.log("Something went horribly wrong");
       window.location.href = './index.html';
       return;
     }
 
-    server('user', {}, term, callback)
+    // Set our user's global UUID here
+    player.uuid = uuid;
+
+    server('stat', {}, term, function(data) {
+      // set user details here... possibly...
+      callback();
+    });
   }
 
   //to show greetings after clearing the terminal
@@ -90,33 +96,47 @@ var game = function() {
       "Silks - " + player.silks + '\n'+
       "Jewels - " + player.jewels + '\n'+
       "Current Town - " + player.currentTown);
+
+    server('stat', {}, term, function(data){
+      term.echo(data);
+    });
   };
 
-  function buy(term) {
-    term.echo('Could not buy');
-    //term.pop();
-    //term.pop();
-    //start(term);
+  function buy(term, npc) {
+    server('talk/buy/' + npc, {type:'', amount:1}, term, function(data){
+      term.pop();
+      term.pop();
+      start(term);
+    });
   }
 
   function sell(term) {
-    term.echo('Could not sell');
-    //term.pop();
-    //term.pop();
-    //start(term);
+    server('talk/sell/' + npc, {type:'', amount:1}, term, function(data){
+      term.pop();
+      term.pop();
+      start(term);
+    });
   }
 
   function valentine(term) {
-    term.echo('Could not valentines');
-    //term.pop();
-    //term.pop();
-    //start(term); 
-    term.echo(
-    ' _______                               ___ ___         __               __   __                     __ \n'+
-    '|   |   |.---.-.-----.-----.--.--.    |   |   |.---.-.|  |.-----.-----.|  |_|__|.-----.-----.-----.|  |\n'+
-    '|       ||  _  |  _  |  _  |  |  |    |   |   ||  _  ||  ||  -__|     ||   _|  ||     |  -__|__ --||__|\n'+
-    '|___|___||___._|   __|   __|___  |     \\_____/ |___._||__||_____|__|__||____|__||__|__|_____|_____||__|\n'+
-    '               |__|  |__|  |_____|                          DailyBurn Hackathon 2015!!!!\n');
+    server('talk/valentines/' + npc, {type:'', amount:1}, term, function(data){
+      term.echo(
+      ' _______                               ___ ___         __               __   __                     __ \n'+
+      '|   |   |.---.-.-----.-----.--.--.    |   |   |.---.-.|  |.-----.-----.|  |_|__|.-----.-----.-----.|  |\n'+
+      '|       ||  _  |  _  |  _  |  |  |    |   |   ||  _  ||  ||  -__|     ||   _|  ||     |  -__|__ --||__|\n'+
+      '|___|___||___._|   __|   __|___  |     \\_____/ |___._||__||_____|__|__||____|__||__|__|_____|_____||__|\n'+
+      '               |__|  |__|  |_____|                          DailyBurn Hackathon 2015!!!!\n');
+      term.pop();
+      term.pop();
+      start(term);
+    });
+  }
+
+  function requirements(term, name) {
+    server('talk/trading/' + name, {}, term, function(data) {
+      term.echo(data);
+      talking(term, name);
+    });
   }
 
   function talking(term, name) {
@@ -164,44 +184,48 @@ var game = function() {
       term.echo('Sorry, ' + command + ' is not a valid NPC.');
     }
 
-    term.echo("Who would you like to talk to?");
-    var npcs = ["Bob","Margaret","John","Steve","Jerry","Mary"];
-
-
-    for ( var i = 0; i < npcs.length ; i++ )
-    {
-      term.echo(' - ' + npcs[i]);
-    }
-
-    term.echo("Type CA[N]CEL to go back");
-
-    // list all npcs
-    term.push(function(command) {
+    server('talk', {}, term, function(data) {
+      term.echo(data);
+      term.echo("Who would you like to talk to?");
+      var npcs = ["Bob","Margaret","John","Steve","Jerry","Mary"];
       for ( var i = 0; i < npcs.length ; i++ )
       {
-        if ( command.match(new RegExp(npcs[i], 'i')) ){
-          talking(term, npcs[i]);
-          return;
+        term.echo(' - ' + npcs[i]);
+      }
+
+      term.echo("Type CA[N]CEL to go back");
+
+      // list all npcs
+      term.push(function(command) {
+        for ( var i = 0; i < npcs.length ; i++ )
+        {
+          if ( command.match(new RegExp(npcs[i], 'i')) ){
+            requirements(term, npcs[i]);
+            return;
+          }
         }
-      }
-      if ( command.match(/^(n|cancel)$/i) ) {
-        term.pop();
-        start(term);
-      }
-      else {
-        notAvailable(term, command);
-      }
-    }, {
-      prompt: '*> '
+        if ( command.match(/^(n|cancel)$/i) ) {
+          term.pop();
+          start(term);
+        }
+        else {
+          notAvailable(term, command);
+        }
+      }, {
+        prompt: '*> '
+      });
     });
-  };
+  }
 
   function travelling(term, destination) {
-    term.echo("Travelling to " + destination);
-    term.echo("You were ambushed by heart bandits!! You lost 25 hearts");
-    term.echo("You have arrived at " + destination);
-    start(term);
-    term.pop();
+    server('travel/' + destination, {}, term, function(data){
+      term.echo(data);
+      term.echo("Travelling to " + destination);
+      term.echo("You were ambushed by heart bandits!! You lost 25 hearts");
+      term.echo("You have arrived at " + destination);
+      term.pop();
+      start(term);
+    });
   }
 
   function travel(term) {
@@ -209,53 +233,56 @@ var game = function() {
       term.echo('Sorry, ' + command + ' is not a valid destination.');
     }
 
-    term.echo(
-      '          @AAAA@           @CCCC@\n' +
-      '        @  A  A  @       @  C  C  @\n' +
-      '      @    AAAA    @   @    CCCC    @\n' +
-      '    @    *    *     @ @     *    *    @\n' +
-      '   @    *     *    BBBBB    *     *    @\n' +
-      '  @    *       *   B   B   *       *    @\n' +
-      '  @    *        * *BBBBB* *        *    @\n' +
-      '  @  FFFF                         DDDD  @\n' +
-      '   @ F  F        +++++++++        D  D @\n' +
-      '    @FFFF        WORLD MAP        DDDD@\n' +
-      '     @   *       +++++++++       *   @\n' +
-      '      @    *                   *    @\n' +
-      '        @   *                 *   @\n' +
-      '          @  *               *  @\n' +
-      '            @  *           *  @\n' +
-      '              @  * EEEEE *  @\n' +
-      '                @  E   E  @\n' +
-      '                  @EEEEE@\n' +
-      '                    @ @\n' +
-      '                     @\n\n' +
-      'You are currently in : A\n' +
-      'Valid destinations: F, B\n\n' +
-      'Where would you like to travel to?    CA[N]CEL to go back');
+    server('travel', {}, term, function(data) {
+      term.echo(data);
+      term.echo(
+        '          @AAAA@           @CCCC@\n' +
+        '        @  A  A  @       @  C  C  @\n' +
+        '      @    AAAA    @   @    CCCC    @\n' +
+        '    @    *    *     @ @     *    *    @\n' +
+        '   @    *     *    BBBBB    *     *    @\n' +
+        '  @    *       *   B   B   *       *    @\n' +
+        '  @    *        * *BBBBB* *        *    @\n' +
+        '  @  FFFF                         DDDD  @\n' +
+        '   @ F  F        +++++++++        D  D @\n' +
+        '    @FFFF        WORLD MAP        DDDD@\n' +
+        '     @   *       +++++++++       *   @\n' +
+        '      @    *                   *    @\n' +
+        '        @   *                 *   @\n' +
+        '          @  *               *  @\n' +
+        '            @  *           *  @\n' +
+        '              @  * EEEEE *  @\n' +
+        '                @  E   E  @\n' +
+        '                  @EEEEE@\n' +
+        '                    @ @\n' +
+        '                     @\n\n' +
+        'You are currently in : A\n' +
+        'Valid destinations: F, B\n\n' +
+        'Where would you like to travel to?    CA[N]CEL to go back');
 
-    var validDestinations = ['F','B'];
+      var validDestinations = ['F','B'];
 
-    term.push(function(command) {
-      for ( var i = 0; i < validDestinations.length ; i++ )
-      {
-        if ( command.match(new RegExp(validDestinations[i], 'i')) ){
-          travelling(term, validDestinations[i]);
-          return;
+      term.push(function(command) {
+        for ( var i = 0; i < validDestinations.length ; i++ )
+        {
+          if ( command.match(new RegExp(validDestinations[i], 'i')) ){
+            travelling(term, validDestinations[i]);
+            return;
+          }
         }
-      }
 
-      if ( command.match(/^(n|cancel)$/i) ) {
-        start(term);
-        term.pop();
-      }
-      else {
-        notAvailable(term, command);
-      }
-    },{
-      prompt: '*> '
+        if ( command.match(/^(n|cancel)$/i) ) {
+          start(term);
+          term.pop();
+        }
+        else {
+          notAvailable(term, command);
+        }
+      },{
+        prompt: '*> '
+      });
     });
-  };
+  }
 
   function invalid(term, command) {
     term.echo('Sorry, ' + command + ' is an invalid command. Type [H]ELP for commands.');
@@ -291,7 +318,7 @@ var game = function() {
       prompt: '*> ',
       greetings: null,
       onInit: function(term) {
-        login(term, function() {
+        login(term, function(data) {
           greetings(term);
           stat(term); // get our player statistics from the server
           start(term);  
