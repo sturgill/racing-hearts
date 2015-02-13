@@ -13,6 +13,8 @@ $.urlParam = function(name){
     }
 }
 
+var RHS = 'http://chris.thesturgills.com/racing-hearts/'
+
 var game = function() {
   // These are not what is stored on the server, just some client side stats
   var player = {
@@ -27,19 +29,33 @@ var game = function() {
     currentTown: 'A'
   };
 
+  function server(url, params, term, callback) {
+    params.uuid = player.uuid;
+    term.pause();
+    $.ajax({
+      url: RHS + url + '?' + jQuery.param(params),
+      success: function( data ) {
+        // perform a request to get the user statistics
+        term.resume();
+        callback();
+      },
+      error: function(response){
+        console.log(response);
+        // go back to our parent
+      }
+    });  
+  }
+
   // login using our cookie?
-  function login(callback) {
+  function login(term, callback) {
     var uuid = $.urlParam('uuid');
     if ( uuid == null ) {
       console.log("Something went horribly wrong");
-      window.location.href = '/';
+      window.location.href = './index.html';
       return;
     }
 
-    // do some ajax based on our uuid
-
-    // perform a request to get the user statistics
-    callback();
+    server('user', {}, term, callback)
   }
 
   //to show greetings after clearing the terminal
@@ -53,7 +69,7 @@ var game = function() {
 "                                        .|....'\n" +
                 'DailyBurn Hackathon 2015\n'+
                 'Chris Sturgill, Kevin Spector, Luke Arntson\n'+
-                'racing-hearts.herokuapp.com\n\n' +
+                'http://sturgill.github.io/racing-hearts\n\n' +
                 'Welcome to Racing Hearts\n');
   }
 
@@ -95,6 +111,12 @@ var game = function() {
     //term.pop();
     //term.pop();
     //start(term); 
+    term.echo(
+    ' _______                               ___ ___         __               __   __                     __ \n'+
+    '|   |   |.---.-.-----.-----.--.--.    |   |   |.---.-.|  |.-----.-----.|  |_|__|.-----.-----.-----.|  |\n'+
+    '|       ||  _  |  _  |  _  |  |  |    |   |   ||  _  ||  ||  -__|     ||   _|  ||     |  -__|__ --||__|\n'+
+    '|___|___||___._|   __|   __|___  |     \\_____/ |___._||__||_____|__|__||____|__||__|__|_____|_____||__|\n'+
+    '               |__|  |__|  |_____|                          DailyBurn Hackathon 2015!!!!\n');
   }
 
   function talking(term, name) {
@@ -144,6 +166,7 @@ var game = function() {
 
     term.echo("Who would you like to talk to?");
     var npcs = ["Bob","Margaret","John","Steve","Jerry","Mary"];
+
 
     for ( var i = 0; i < npcs.length ; i++ )
     {
@@ -268,7 +291,7 @@ var game = function() {
       prompt: '*> ',
       greetings: null,
       onInit: function(term) {
-        login(function() {
+        login(term, function() {
           greetings(term);
           stat(term); // get our player statistics from the server
           start(term);  
