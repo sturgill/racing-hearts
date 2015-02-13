@@ -4,7 +4,7 @@ class User < ActiveRecord::Base
 
   validates :email, presence: true # uniqueness constraint enforced by database
   # uniquness constraint on uuid enforced by database -- if that fails we have bigger problems...
-  validates :town_identifier, presence: true, inclusion: { in: World::ALL_TOWNS }
+  validates :current_town_identifier, presence: true, inclusion: { in: World::ALL_TOWNS }
 
   monetize :hearts_cents
 
