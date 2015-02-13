@@ -98,22 +98,33 @@ var game = function() {
   }
 
   function talking(term, name) {
-    function notAvailable(term, command) {
-      term.echo('Sorry, ' + command + ' is not a valid command. Please use [B]uy/[S]ell/[V]alentine/Can[n]cel');
+    function help(term) {
+      term.echo('[B]UY\n\tBuy an item from this person\n'+
+      '[S]ELL\n\tSell an item to this person\n'+
+      '[V]ALENTINE\n\tAsk this person to be your valentine\n'+
+      '[L]EAVE\n\tLeave this person');
     }
 
-    term.echo('Talking to ' + name + '\nValid Commands are [B]uy/[S]ell/[V]alentine/Ca[n]cel');
+    function notAvailable(term, command) {
+      term.echo('Sorry, ' + command + ' is not a valid command.\n'+
+        'Type [H]ELP for commands.');
+    }
+
+    term.echo('Talking to ' + name + '\nType [H]ELP for commands.');
     term.push(function(command) {
-      if ( command.match(/b|buy/i) ) {
+      if ( command.match(/^(b|buy)$/i) ) {
         buy(term);
       }
-      else if ( command.match(/s|sell/i) ) {
+      else if ( command.match(/^(s|sell)$/i) ) {
         sell(term);
       }
-      else if ( command.match(/v|valentine/i) ) {
+      else if ( command.match(/^(v|valentine)$/i) ) {
         valentine(term);
       }
-      else if ( command.match(/n|cancel/i) ) {
+      else if ( command.match(/^(h|help)$/i) ) {
+        help(term);
+      }
+      else if ( command.match(/^(l|leave)$/i) ) {
         term.pop(); // go up one level
         term.pop(); // go all the way to the top
         start(term);
@@ -131,13 +142,15 @@ var game = function() {
       term.echo('Sorry, ' + command + ' is not a valid NPC.');
     }
 
-    term.echo("Who would you like to talk to?   CA[N]CEL to go back");
+    term.echo("Who would you like to talk to?");
     var npcs = ["Bob","Margaret","John","Steve","Jerry","Mary"];
 
     for ( var i = 0; i < npcs.length ; i++ )
     {
       term.echo(' - ' + npcs[i]);
     }
+
+    term.echo("Type CA[N]CEL to go back");
 
     // list all npcs
     term.push(function(command) {
@@ -148,7 +161,7 @@ var game = function() {
           return;
         }
       }
-      if ( command.match(/n|cancel/i) ) {
+      if ( command.match(/^(n|cancel)$/i) ) {
         term.pop();
         start(term);
       }
@@ -209,7 +222,7 @@ var game = function() {
         }
       }
 
-      if ( command.match(/n|cancel/i) ) {
+      if ( command.match(/^(n|cancel)$/i) ) {
         start(term);
         term.pop();
       }
@@ -231,19 +244,19 @@ var game = function() {
 
   $( document ).ready(function() {
     $('#valentines-terminal').terminal(function(command, term) {
-      if ( command.match(/h|help/i) ) {
+      if ( command.match(/^(h|help)$/i) ) {
         help(term);
       }
-      else if ( command.match(/s|stat/i) ) {
+      else if ( command.match(/^(s|stat)$/i) ) {
         stat(term);
       }
-      else if ( command.match(/t|talk/i) ) {
+      else if ( command.match(/^(t|talk)$/i) ) {
         talk(term);
       }
-      else if ( command.match(/r|travel/i) ) {
+      else if ( command.match(/^(r|travel)$/i) ) {
         travel(term);
       }
-      else if ( command.match(/c|clear/i) ) {
+      else if ( command.match(/^(c|clear)$/i) ) {
         term.clear();
       }
       else {

@@ -1,0 +1,22 @@
+/*
+ * This css file is part of jquery terminal
+ *
+ * Licensed under GNU LGPL Version 3 license
+ * Copyright (c) 2011-2013 Jakub Jankiewicz <http://jcubic.pl>
+ *
+ */
+body {
+  background: url('../images/background.jpg');
+  background-size: cover;
+}
+
+#valentines-terminal.terminal {
+  margin: 45px auto;
+  box-shadow 10px 10px 5px #000000;
+  border: 1px solid #000000;
+}
+
+.terminal, .terminal-output, .cmd {
+  background-color: #b00000;
+  color: #FFFFFF;
+}
