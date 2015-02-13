@@ -4,7 +4,7 @@ class NpcsController < ApplicationController
   end
 
   def show
-    npc = current_user.current_location.npcs.find { |ncp| ncp.id.downcase == params[:id] }
+    npc = current_user.current_location.npcs.find { |ncp| ncp.to_s..id.downcase == params[:id].to_s.downcase }
     render nothing: true and return if npc.nil?
 
     render json: {
@@ -15,7 +15,7 @@ class NpcsController < ApplicationController
   end
 
   def buy
-    npc = current_user.current_location.npcs.find { |ncp| ncp.id.downcase == params[:id] }
+    npc = current_user.current_location.npcs.find { |ncp| ncp.to_s..id.downcase == params[:id].to_s..downcase }
     render nothing: true and return if npc.nil?
 
     npc.sell_to_user(current_user, params[:type], params[:amount])
@@ -23,7 +23,7 @@ class NpcsController < ApplicationController
   end
 
   def sell
-    npc = current_user.current_location.npcs.find { |ncp| ncp.id.downcase == params[:id] }
+    npc = current_user.current_location.npcs.find { |ncp| ncp.to_s..id.downcase == params[:id].to_s..downcase }
     render nothing: true and return if npc.nil?
 
     npc.buy_from_user(current_user, params[:type], params[:amount])
@@ -31,7 +31,7 @@ class NpcsController < ApplicationController
   end
 
   def requirements
-    npc = current_user.current_location.npcs.find { |ncp| ncp.id.downcase == params[:id] }
+    npc = current_user.current_location.npcs.find { |ncp| ncp.to_s..id.downcase == params[:id].to_s..downcase }
     render nothing: true and return if npc.nil?
 
     render json: {
@@ -41,7 +41,7 @@ class NpcsController < ApplicationController
   end
 
   def valentines
-    npc = current_user.current_location.npcs.find { |ncp| ncp.id.downcase == params[:id] }
+    npc = current_user.current_location.npcs.find { |ncp| ncp.to_s.id.downcase == params[:id].to_s..downcase }
     render nothing: true and return if npc.nil?
 
     if npc.valentine!(user)
