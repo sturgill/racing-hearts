@@ -1,0 +1,222 @@
+****                                           ****
+****          DailyBurn Hackathon 2015         ****
+***    Team Winning - Luke A. Chris S. Kevin S. ***
+****                                           ****
+****                                           ****
+
+Theme: Valentines!
+Project: Text-Based Game
+
+==========================================================================================================
+DATA IDEAS
+
+Player
+  :name (string)
+  :password (md5)
+  :sessionid (simple guid)
+  :age (int)
+  :eyecolor (string)
+  :haircolor (string)
+  :hearts     (int)
+  :perfumes   (int)
+  :roses      (int)
+  :chocolates (int)
+  :silks      (int)
+  :jewels     (int)
+  :current_town (string)
+  :valentine  (string)
+  :admin     (bool)
+  
+Town
+  :name   (string)
+  :links  (string of array?)
+  
+Npc
+  :name (string)
+  :age (int)
+  :eyecolor (string)
+  :haircolor (string)
+  :requirements (array string)
+  :trades (array string)
+  :buy back ratio (number)
+  :current_town (string)
+  
+**********************************************************************************************************
+END POINTS
+- these are all of the end points the client will be hitting using AJAX (polling)
+==========================================================================================================
+POST /user/login
+  :username string
+  :password string
+
+EXPECTED RETURN
+  :status string {ok|error}
+  :message string {"Invalid password" | "No user by this name"}
+  :sessionid string {hash set in cookie}
+  
+DESCRIPTION
+  The user attempts to login with a username/password combination. The Javascript automatically converts
+the password to MD5 format. The server then checks if the user exists, if the MD5 matches the username's
+hash. If not, return an error. If so, return ok, no message, and generate a session id which is used
+for every other call rather than the password.
+  
+==========================================================================================================
+POST /user/create
+  :username string
+  :password string
+  :age int
+  :eyecolor string
+  :haircolor string
+  
+EXPECTED RETURN
+  :status string {ok|error}
+  :message string {"Username already taken" | "Invalid password" | "Something went wrong... stack dump"}
+  :sessionid string {hash set in cookie}
+
+DESCRIPTION
+  The user is creating a new login. The client will do password/confirm password, and send an MD5 to the
+server so we don't actually log any real passwords :) If no other users exist with this username, the
+age is not something crazy like negative, etc. etc., we send back an ok, no message, and the same
+generate session id we had before.
+
+==========================================================================================================
+POST /travel
+  :username string
+  :sessionid string
+
+EXPECT RETURN
+  :current_location string
+  :valid_destinations array {["B","D"]}
+
+DESCRIPTION
+  The user is requesting to travel. The server should know which town the user is currently in, and have
+a quick check to tell the user which towns they can travel to. This could technically be client-side, but
+making it server makes this easier.
+
+==========================================================================================================
+  
+POST /travel/:id
+  :username string
+  :sessionid string
+ 
+EXPECT RETURN
+  :status string {ok|error}
+  :message string {"Invalid destination" | "You were robbed by heart bandits and lost X hearts"}
+
+DESCRIPTION
+  The user is attempting to travel to another town. First, check to make sure the user can even do this
+based on the user's current location. Next, randomly apply an action to the user's stats, this includes
+removing candy hearts, adding items, etc. etc. All actual events according to our travel table are done
+on the back-end. Now, send the message corresponding to the action up to the user, and the front-end will
+take care of displaying this message. If everything went well, update the user's location to the new town.
+
+==========================================================================================================
+  
+POST /talk
+  :username string
+  :sessionid string
+
+EXPECT RETURN
+  :npcs array {["John","Bob","Gary"],["Mary","Sean","Bob"]}
+
+DESCRIPTION
+  The user is requesting all npcs in the current town they are in. Get the list of NPCs associated with
+this town, thats all we need.
+
+==========================================================================================================
+  
+POST /talk/requirements/:id
+  :username string
+  :sessionid string
+
+EXPECT RETURN
+  :status string {ok|error}
+  :message string {"Invalid user" | "age:32;eyecolor:blue,haircolor:brown,perfume:30;roses:2;chocolates:10"}
+
+DESCRIPTION
+  The user is asking for a specific npc's requirements. Make sure the NPC is in the same town as the
+user who is requesting it, and if all is good, send the requirements.
+
+** NOTE ** If the user can match this NPC, also attach to the message that they can now ask to be
+the NPC's valentine. "canValentine:1"
+
+==========================================================================================================
+  
+POST /talk/trading/:id
+  :username string
+  :sessionid string
+
+EXPECT RETURN
+  :status string {ok|error}
+  :message string {"Invalid user" | "buy:{perfume:0.25,roses:0.15},sell:{perfume:0.10,roses:0.10}"}
+
+DESCRIPTION
+  The user is asking for the specific npc's trading numbers. Make sure the NPC is in the same town as
+the user who is requesting it, if all is good, send the trading numbers.
+
+==========================================================================================================
+  
+POST /talk/buy/:id
+  :username string
+  :sessionid string
+  :type string
+  :amount int
+
+EXPECT RETURN
+  :status string {ok|error}
+  :message string {"Invalid user" | "Purchased"}
+
+DESCRIPTION
+  The user is requesting to buy a specific type of item. Verify the NPC is in the same town as the user.
+Next, verify the type is a valid type we can buy from an NPC, then check to amount against that NPC's
+trading number. Finally, make sure the user has enough cash to actually complete this transaction. If so,
+transfer over X number of units to the user's account, reduce the user's money by XX.XX hearts (USD
+currency based), and return "Purchased"
+
+==========================================================================================================
+  
+POST /talk/sell/:id
+  :username string
+  :sessionid string
+  :type string
+  :amount int
+
+EXPECT RETURN
+  :status string {ok|error}
+  :message string {"Invalid user" | "Sold"}
+
+DESCRIPTION
+  The user is requesting to sell a specific type of item. Verify the NPC is in the same town as the user.
+Next, verify the type is a valid type we can sell from an NPC, then check to amount against that player's
+actual amount. If the user has enough of that amount, check the NPC's trading value for selling (buy-back
+* trade), subtract the number of inventory items and add the number of candy hearts equivalent to the trade.
+
+==========================================================================================================
+
+POST /talk/valentines/:id
+  :username string
+  :sessionid string
+
+EXPECT RETURN
+  :status string {ok|error}
+  :message string {"Invalid user" | "Not enough requirements" | "Success"}
+
+DESCRIPTION
+  The user is attempting to win the game! Verify the NPC is valid and in the same town as the user. Next,
+check the user's current inventory against the NPC's requirements. If every attribute is equal to or greater
+than the NPCs, then this NPC is their valentines! Set the player's valentine attribute to this player.
+
+==========================================================================================================
+  
+POST /stat
+  :username string
+  :sessionid string
+
+EXPECT RETURN
+  :stats string {"town:e,hearts:500,perfume:30,chocolates:3,valentine:''"}
+  
+DESCRIPTION
+  The user is requesting their own stats. This includes what town they are in, their candy hearts, their
+inventory stats, and whether or not they currently have a valentines.
+  
+==========================================================================================================
