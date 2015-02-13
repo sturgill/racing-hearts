@@ -1,4 +1,5 @@
 class User < ActiveRecord::Base
+  include TravelEventAction
   before_create :generate_uuid
   before_create :setup_resources
 
@@ -20,6 +21,10 @@ class User < ActiveRecord::Base
     @world ||= ::World.new
   end
 
+  def travel_events
+    %w(attacked, companion, discover, helped, pleasant)
+  end
+
   def current_location
     world.location(current_town_identifier)
   end
@@ -30,6 +35,21 @@ class User < ActiveRecord::Base
 
   def valid_destinations
     world.neighbors_for_town(current_location.id)
+  end
+
+  def initiate_travel_event
+    action = travel_events.sample
+    message = self.send(action)
+    self.save!
+    return message
+  end
+
+  def sub_hearts(amount)
+    self.hearts = self.hearts - Money.new(amount, "USD")
+  end
+
+  def add_hearts(amount)
+    self.hearts = self.hearts + Money.new(amount, "USD")
   end
 
   protected
