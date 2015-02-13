@@ -22,7 +22,7 @@ class User < ActiveRecord::Base
   end
 
   def travel_events
-    %w(attacked, companion, discover, helped, pleasant)
+    ["attacked", "companion", "discover", "helped", "pleasant"]
   end
 
   def current_location
@@ -41,6 +41,7 @@ class User < ActiveRecord::Base
     action = travel_events.sample
     message = self.send(action)
     self.current_town_identifier = new_location
+    puts message
     self.save!
     return message
   end

@@ -5,4 +5,5 @@ Rails.application.routes.draw do
 
   get '/travel' => 'towns#index'
   get '/travel:id' => 'towns#update'
+  get 'stat' => 'stats#index'
 end
