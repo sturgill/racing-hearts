@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-
+ruby '2.1.2'
 
 gem 'rails', '4.2.0'
 
@@ -13,7 +13,7 @@ gem 'mysql2', :group => :development
 gem 'figaro'
 gem 'omniauth-github'
 gem 'money-rails'
-
+gem 'rails_12factor', group: :production
 
 
 # To use ActiveModel has_secure_password
