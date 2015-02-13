@@ -14,7 +14,7 @@ $.urlParam = function(name){
 }
 
 // Racing Hearts Server URL
-var RHS = 'http://chris.thesturgills.com/racing-hearts/'
+var RHS = 'http://racing-hearts.herokuapp.com/'
 
 var game = function() {
   // These are not what is stored on the server, just some client side stats
