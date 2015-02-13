@@ -29,8 +29,16 @@ class Npc
     true
   end
 
+  def cost_to_buy_from(thing)
+    @buy[thing]
+  end
+
+  def price_to_sell_to(thing)
+    @sell[thing]
+  end
+
   def sell_to_user(user, thing, number)
-    cost = (@buy[thing].to_f * 100).to_i * number
+    cost = (cost_to_buy_from(thing).to_f * 100).to_i * number
     return false if user.hearts_cents < cost
     User.transaction do
       user.increment(thing, number)
@@ -39,7 +47,7 @@ class Npc
   end
 
   def buy_from_user(user, thing, number)
-    cost = (@sell[thing].to_f * 100).to_i * number
+    cost = (price_to_sell_to(thing).to_f * 100).to_i
     User.transaction do
       user.decrement(thing, number)
       user.increment(:heart_cents, number)
