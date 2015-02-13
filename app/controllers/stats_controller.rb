@@ -12,6 +12,7 @@ class StatsController < ApplicationController
       roses: current_user.roses,
       chocolates: current_user.chocolates,
       silks: current_user.silks,
+      jewels: current_user.jewels,
       current_town: {
         id: current_user.current_location.id,
         name: current_user.current_location.name

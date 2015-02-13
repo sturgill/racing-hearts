@@ -47,11 +47,11 @@ class User < ActiveRecord::Base
   end
 
   def sub_hearts(amount)
-    self.hearts = self.hearts - Money.new(amount, "USD")
+    self.hearts = self.hearts - Money.new(amount * 100, "USD")
   end
 
   def add_hearts(amount)
-    self.hearts = self.hearts + Money.new(amount, "USD")
+    self.hearts = self.hearts + Money.new(amount * 100, "USD")
   end
 
   protected
