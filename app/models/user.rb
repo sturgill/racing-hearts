@@ -1,10 +1,11 @@
 class User < ActiveRecord::Base
-  before_create :generate_uuid
-  before_create :setup_resources
+  include TravelEventAction
+  before_validation :generate_uuid, on: :create
+  before_validation :setup_resources, on: :create
 
   validates :email, presence: true # uniqueness constraint enforced by database
   # uniquness constraint on uuid enforced by database -- if that fails we have bigger problems...
-  validates :current_town_identifier, presence: true, inclusion: { in: World::ALL_TOWNS }
+  validates :current_town_identifier, presence: true, inclusion: { in: World::ALL_TOWNS.keys }
 
   monetize :hearts_cents
 
@@ -20,6 +21,10 @@ class User < ActiveRecord::Base
     @world ||= ::World.new
   end
 
+  def travel_events
+    %w(attacked, companion, discover, helped, pleasant)
+  end
+
   def current_location
     world.location(current_town_identifier)
   end
@@ -30,6 +35,22 @@ class User < ActiveRecord::Base
 
   def valid_destinations
     world.neighbors_for_town(current_location.id)
+  end
+
+  def initiate_travel_event(new_location)
+    action = travel_events.sample
+    message = self.send(action)
+    self.current_town_identifier = new_location
+    self.save!
+    return message
+  end
+
+  def sub_hearts(amount)
+    self.hearts = self.hearts - Money.new(amount, "USD")
+  end
+
+  def add_hearts(amount)
+    self.hearts = self.hearts + Money.new(amount, "USD")
   end
 
   protected
