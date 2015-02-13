@@ -1,6 +1,7 @@
 class User < ActiveRecord::Base
   before_create :generate_uuid
-  validate :email, presence: true # uniqueness constraint enforced at database
+  validate :email, presence: true # uniqueness constraint enforced by database
+  # uniquness constraint on uuid enforced by database -- if that fails we have bigger problems...
 
   monetize :hearts_cents
 
