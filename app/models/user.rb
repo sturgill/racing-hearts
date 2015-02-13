@@ -37,9 +37,10 @@ class User < ActiveRecord::Base
     world.neighbors_for_town(current_location.id)
   end
 
-  def initiate_travel_event
+  def initiate_travel_event(new_location)
     action = travel_events.sample
     message = self.send(action)
+    self.current_town_identifier = new_location
     self.save!
     return message
   end
