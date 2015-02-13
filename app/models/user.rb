@@ -42,7 +42,11 @@ class User < ActiveRecord::Base
     message = self.send(action)
     self.current_town_identifier = new_location
     self.save!
-    return message
+    if self.hearts <=0
+      return message, true
+    else
+      return message, false
+    end
   end
 
   def sub_hearts(amount)

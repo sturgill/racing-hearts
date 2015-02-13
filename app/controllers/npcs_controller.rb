@@ -35,9 +35,10 @@ class NpcsController < ApplicationController
     render nothing: true and return if npc.nil?
 
     render json: {
-      status: "ok"
+      status: "ok",
       message: npc.valentine
     }
+  end
 
   def valentines
     npc = current_user.current_location.npcs.find { |ncp| ncp.id.downcase == params[:id].downcase }
@@ -50,7 +51,7 @@ class NpcsController < ApplicationController
       }
     else
       render json: {
-        status: "error"
+        status: "error",
         message: "Not enough requirements"
       }
     end
