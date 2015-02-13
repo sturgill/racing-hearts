@@ -1,4 +1,6 @@
 class StatsController < ApplicationController
+  extend MoneyRails::ActionViewExtension
+
   def index
     render json: json_attrs
   end
@@ -7,7 +9,7 @@ class StatsController < ApplicationController
 
   def json_attrs
     {
-      hearts: current_user.hearts_cents.to_f / 100,
+      hearts: self.humanized_money(current_user.hearts),
       perfumes: current_user.perfumes,
       roses: current_user.roses,
       chocolates: current_user.chocolates,

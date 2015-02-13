@@ -7,7 +7,7 @@ Rails.application.routes.draw do
   get '/travel:id' => 'towns#update'
   get 'stat' => 'stats#index'
 
-  get '/talk' => 'npc#index'
+  get '/talk' => 'npcs#index'
   # get '/talk/requirements/:id'
   # get '/talk/trading/:id'
   # get '/talk/buy/:id'
