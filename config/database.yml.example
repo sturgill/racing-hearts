@@ -1,0 +1,5 @@
+development:
+  adapter: mysql2
+  host: localhost
+  database: hearts_dev
+  username: root
