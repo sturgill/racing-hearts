@@ -8,7 +8,7 @@
 # :current_town (string)
 
 class Npc
-  attr_reader :id, :name, :town
+  attr_reader :id, :name, :town, :buy, :sell
 
   def initialize(attrs, town)
     @id = attrs['id']
