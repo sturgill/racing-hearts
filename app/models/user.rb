@@ -22,7 +22,7 @@ class User < ActiveRecord::Base
   end
 
   def travel_events
-    %w(attacked, companion, discover, helped, pleasant)
+    ["attacked", "companion", "discover", "helped", "pleasant"]
   end
 
   def current_location
@@ -34,13 +34,14 @@ class User < ActiveRecord::Base
   end
 
   def valid_destinations
-    world.neighbors_for_town(current_location.id)
+    world.neighbors_for_town(current_location.id).map{|town| {:id => town.id, :name => town.name}}
   end
 
   def initiate_travel_event(new_location)
     action = travel_events.sample
     message = self.send(action)
     self.current_town_identifier = new_location
+    puts message
     self.save!
     return message
   end

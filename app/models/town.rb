@@ -9,4 +9,7 @@ class Town
     @name = name
   end
 
+  def ncps
+    
+  end
 end

@@ -1,7 +1,7 @@
 class World
   ALL_TOWNS = {
     'A' => 'Heartsville',
-    'B' => 'Chocolate Town',
+    'B' => 'Brunch Town',
     'C' => 'Los Corazones',
     'D' => 'Valentine Valley',
     'E' => 'BrokeHeart Mountain',
