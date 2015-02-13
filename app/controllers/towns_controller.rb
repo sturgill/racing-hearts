@@ -5,13 +5,19 @@ class TownsController < ApplicationController
   end
 
   def update
-    town_id = params[:id]
-    if current_user.valid_destinations.include?(town_id)
+    town_id = user_params[:id].upcase
+    if current_user.valid_destinations.collect{ |d| d[:id].upcase }.include?(town_id)
       message = current_user.initiate_travel_event(town_id)
       render json: {:status => "ok", :message => message}
     else
       render json: {:status => "error", :message => "Invalid destination"}
     end
 
+  end
+
+  protected
+
+  def user_params
+    params.permit(:id, :current_town_identifier)
   end
 end

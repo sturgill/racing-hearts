@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   get '/login', to: redirect('/auth/github')
 
   get '/travel' => 'towns#index'
-  get '/travel:id' => 'towns#update'
+  get '/travel/:id' => 'towns#update'
   get 'stat' => 'stats#index'
 
   get '/talk' => 'npcs#index'
