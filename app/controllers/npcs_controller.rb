@@ -41,7 +41,7 @@ class NpcsController < ApplicationController
   end
 
   def valentines
-    npc = current_user.current_location.npcs.find { |ncp| ncp.to_s.id.downcase == params[:id].to_s.downcase }
+    npc = current_user.current_location.npcs.find { |ncp| ncp.id.to_s.downcase == params[:id].to_s.downcase }
     render nothing: true and return if npc.nil?
 
     if npc.valentine!(current_user)
