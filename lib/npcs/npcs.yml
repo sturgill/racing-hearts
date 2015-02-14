@@ -1,6 +1,6 @@
 ---
 - id: 1
-  name: Robert,
+  name: Robert
   town: A
   buy:
     perfumes: 1.57
@@ -21,7 +21,7 @@
     silks: 6
     jewels: 29
 - id: 2
-  name: Joe,
+  name: Joe
   town: A
   buy:
     perfumes: 8.96
@@ -42,7 +42,7 @@
     silks: 11
     jewels: 7
 - id: 3
-  name: Margaret,
+  name: Margaret
   town: A
   buy:
     perfumes: 1.97
@@ -63,7 +63,7 @@
     silks: 5
     jewels: 0
 - id: 4
-  name: Paul,
+  name: Paul
   town: A
   buy:
     perfumes: 2.19
@@ -84,7 +84,7 @@
     silks: 6
     jewels: 0
 - id: 5
-  name: Susan,
+  name: Susan
   town: A
   buy:
     perfumes: 9.11
@@ -105,7 +105,7 @@
     silks: 13
     jewels: 11
 - id: 6
-  name: Katie,
+  name: Katie
   town: A
   buy:
     perfumes: 6.67
@@ -126,7 +126,7 @@
     silks: 11
     jewels: 32
 - id: 7
-  name: Madison,
+  name: Madison
   town: B
   buy:
     perfumes: 2.17
@@ -147,7 +147,7 @@
     silks: 12
     jewels: 16
 - id: 8
-  name: Ethan,
+  name: Ethan
   town: B
   buy:
     perfumes: 0.59
@@ -168,7 +168,7 @@
     silks: 3
     jewels: 1
 - id: 9
-  name: Samantha,
+  name: Samantha
   town: B
   buy:
     perfumes: 7.35
@@ -189,7 +189,7 @@
     silks: 3
     jewels: 0
 - id: 10
-  name: Betty,
+  name: Betty
   town: B
   buy:
     perfumes: 0.51
@@ -210,7 +210,7 @@
     silks: 5
     jewels: 0
 - id: 11
-  name: James,
+  name: James
   town: B
   buy:
     perfumes: 7.1
@@ -231,7 +231,7 @@
     silks: 6
     jewels: 27
 - id: 12
-  name: Jessica,
+  name: Jessica
   town: B
   buy:
     perfumes: 2.93
@@ -252,7 +252,7 @@
     silks: 18
     jewels: 1
 - id: 13
-  name: John,
+  name: John
   town: C
   buy:
     perfumes: 2.72
@@ -273,7 +273,7 @@
     silks: 14
     jewels: 18
 - id: 14
-  name: Mary,
+  name: Mary
   town: C
   buy:
     perfumes: 2.24
@@ -294,7 +294,7 @@
     silks: 13
     jewels: 2
 - id: 15
-  name: Sandra,
+  name: Sandra
   town: C
   buy:
     perfumes: 9.64
@@ -315,7 +315,7 @@
     silks: 5
     jewels: 10
 - id: 16
-  name: Carol,
+  name: Carol
   town: C
   buy:
     perfumes: 0.72
@@ -336,7 +336,7 @@
     silks: 23
     jewels: 12
 - id: 17
-  name: Karen,
+  name: Karen
   town: C
   buy:
     perfumes: 2.17
@@ -357,7 +357,7 @@
     silks: 9
     jewels: 5
 - id: 18
-  name: Lisa,
+  name: Lisa
   town: C
   buy:
     perfumes: 5.21
@@ -378,7 +378,7 @@
     silks: 13
     jewels: 27
 - id: 19
-  name: Charles,
+  name: Charles
   town: D
   buy:
     perfumes: 7.53
@@ -399,7 +399,7 @@
     silks: 38
     jewels: 0
 - id: 20
-  name: Nancy,
+  name: Nancy
   town: D
   buy:
     perfumes: 5.4
@@ -420,7 +420,7 @@
     silks: 15
     jewels: 36
 - id: 21
-  name: Maria,
+  name: Maria
   town: D
   buy:
     perfumes: 5.64
@@ -441,7 +441,7 @@
     silks: 8
     jewels: 24
 - id: 22
-  name: Anthony,
+  name: Anthony
   town: D
   buy:
     perfumes: 9.98
@@ -462,7 +462,7 @@
     silks: 18
     jewels: 23
 - id: 23
-  name: Richard,
+  name: Richard
   town: D
   buy:
     perfumes: 2.33
@@ -483,7 +483,7 @@
     silks: 18
     jewels: 9
 - id: 24
-  name: Tom,
+  name: Tom
   town: D
   buy:
     perfumes: 3.3
@@ -504,7 +504,7 @@
     silks: 15
     jewels: 26
 - id: 25
-  name: Ken,
+  name: Ken
   town: E
   buy:
     perfumes: 8.16
@@ -525,7 +525,7 @@
     silks: 11
     jewels: 3
 - id: 26
-  name: Jennifer,
+  name: Jennifer
   town: E
   buy:
     perfumes: 7.52
@@ -546,7 +546,7 @@
     silks: 39
     jewels: 0
 - id: 27
-  name: Tyler,
+  name: Tyler
   town: E
   buy:
     perfumes: 6.61
@@ -567,7 +567,7 @@
     silks: 0
     jewels: 0
 - id: 28
-  name: George,
+  name: George
   town: E
   buy:
     perfumes: 2.87
@@ -609,7 +609,7 @@
     silks: 27
     jewels: 10
 - id: 30
-  name: Chris,
+  name: Chris
   town: E
   buy:
     perfumes: 4.67
@@ -630,7 +630,7 @@
     silks: 16
     jewels: 8
 - id: 31
-  name: Mark,
+  name: Mark
   town: F
   buy:
     perfumes: 6.06
@@ -651,7 +651,7 @@
     silks: 38
     jewels: 17
 - id: 32
-  name: Steven,
+  name: Steven
   town: F
   buy:
     perfumes: 2.02
@@ -672,7 +672,7 @@
     silks: 18
     jewels: 10
 - id: 33
-  name: Dan,
+  name: Dan
   town: F
   buy:
     perfumes: 9.74
@@ -693,7 +693,7 @@
     silks: 11
     jewels: 21
 - id: 34
-  name: Andrew,
+  name: Andrew
   town: F
   buy:
     perfumes: 4.38
@@ -714,7 +714,7 @@
     silks: 23
     jewels: 19
 - id: 35
-  name: Barbara,
+  name: Barbara
   town: F
   buy:
     perfumes: 4.96
@@ -735,7 +735,7 @@
     silks: 17
     jewels: 20
 - id: 36
-  name: Olivia,
+  name: Olivia
   town: F
   buy:
     perfumes: 9.41
