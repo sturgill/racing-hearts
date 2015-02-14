@@ -58,7 +58,7 @@ var game = function() {
 "                                        .|....'\n" +
                 'DailyBurn Hackathon 2015\n'+
                 'Chris Sturgill, Kevin Spector, Luke Arntson\n'+
-                'http://sturgill.github.io/racing-hearts\n\n' +
+                'https://github.com/sturgill/racing-hearts\n\n' +
                 'Welcome to Racing Hearts\n');
   }
 
