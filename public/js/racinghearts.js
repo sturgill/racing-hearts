@@ -58,7 +58,7 @@ var game = function() {
 "                                        .|....'\n" +
                 'DailyBurn Hackathon 2015\n'+
                 'Chris Sturgill, Kevin Spector, Luke Arntson\n'+
-                'http://sturgill.github.io/racing-hearts\n\n' +
+                'https://github.com/sturgill/racing-hearts\n\n' +
                 'Welcome to Racing Hearts\n');
   }
 
@@ -103,7 +103,7 @@ var game = function() {
       term.echo(" Player Name - " + player.name + '\n'+
         " Hearts - " + player.hearts + '\n'+
         " Inventory:\n" +
-        "   Perfume - " + player.perfume + '\n'+
+        "   Perfumes - " + player.perfumes + '\n'+
         "   Roses - " + player.roses + '\n'+
         "   Chocolates - " + player.chocolates + '\n'+
         "   Silks - " + player.silks + '\n'+
@@ -120,6 +120,7 @@ var game = function() {
       if ( Math.floor(command) == command && $.isNumeric(command) )
       {
         server('talk/' + action + '/' + id, {type: type, amount: command}, term, function(data) {
+          term.pop();
           term.pop();
           term.pop();
           term.pop();
@@ -141,7 +142,7 @@ var game = function() {
   function trade(term, npc, units, action)
   {
     function help(term) {
-      term.echo('[P]erfume - ' + units.perfumes + '\n' +
+      term.echo('[P]erfumes - ' + units.perfumes + '\n' +
         '[R]oses - ' + units.roses + '\n' +
         '[C]hocolates - ' + units.chocolates + '\n' +
         '[S]ilks - ' + units.silks + '\n' +
@@ -149,11 +150,12 @@ var game = function() {
         '[L]eave - Go back to town');
     }
 
+    help(term);
     term.echo('Please select an item to ' + action);
 
     term.push(function(command) {
-      if ( command.match(/^(p|perfume)$/i) ) {
-        amount(term, 'perfume', npc.id, action);
+      if ( command.match(/^(p|perfumes)$/i) ) {
+        amount(term, 'perfumes', npc.id, action);
       }
       else if ( command.match(/^(r|roses)$/i) ) {
         amount(term, 'roses', npc.id, action);
@@ -241,13 +243,13 @@ var game = function() {
         'Type [H]ELP for commands.');
     }
 
-    term.echo('Talking to ' + name + '\nType [H]ELP for commands.');
+    help(term);
     term.push(function(command) {
       if ( command.match(/^(b|buy)$/i) ) {
         trade(term, npc, buy, 'buy');
       }
       else if ( command.match(/^(s|sell)$/i) ) {
-        trade(term, npc, sell, 'buy');
+        trade(term, npc, sell, 'sell');
       }
       else if ( command.match(/^(v|valentine)$/i) ) {
         valentine(term, npc);
@@ -274,22 +276,21 @@ var game = function() {
     }
 
     server('talk', {}, term, function(data) {
-      term.echo(data);
       term.echo("Who would you like to talk to?");
-      var npcs = ["Bob","Margaret","John","Steve","Jerry","Mary"];
-      for ( var i = 0; i < npcs.length ; i++ )
+
+      for ( var i = 0; i < data.length ; i++ )
       {
-        term.echo(' - ' + npcs[i]);
+        term.echo(' - ' + data[i].name);
       }
 
       term.echo("Type CA[N]CEL to go back");
 
       // list all npcs
       term.push(function(command) {
-        for ( var i = 0; i < npcs.length ; i++ )
+        for ( var i = 0; i < data.length ; i++ )
         {
-          if ( command.match(new RegExp(npcs[i], 'i')) ){
-            requirements(term, npcs[i]);
+          if ( command.match(new RegExp(data[i].name, 'i')) ){
+            requirements(term, data[i]);
             return;
           }
         }

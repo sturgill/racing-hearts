@@ -44,7 +44,7 @@ class NpcsController < ApplicationController
     npc = current_user.current_location.npcs.find { |ncp| ncp.to_s.id.downcase == params[:id].to_s.downcase }
     render nothing: true and return if npc.nil?
 
-    if npc.valentine!(user)
+    if npc.valentine!(current_user)
       render json: {
         status: "ok",
         message: "Success"
