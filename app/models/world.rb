@@ -16,9 +16,11 @@ class World
     file = File.join Rails.root, 'lib', 'npcs',  'npcs.yml'
     yamls = YAML.load_file file
 
+    i = 1
     @ncps = yamls.collect do |ncp_attrs|
       town = @towns.find { |t| t.id == ncp_attrs['town'].strip }
-      Npc.new ncp_attrs, town
+      Npc.new "ncp-#{i}", ncp_attrs, town
+      i += 1
     end
   end
 

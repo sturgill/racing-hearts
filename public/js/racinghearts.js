@@ -150,6 +150,7 @@ var game = function() {
         '[L]eave - Go back to town');
     }
 
+    help(term);
     term.echo('Please select an item to ' + action);
 
     term.push(function(command) {
@@ -242,13 +243,13 @@ var game = function() {
         'Type [H]ELP for commands.');
     }
 
-    term.echo('Talking to ' + name + '\nType [H]ELP for commands.');
+    help(term);
     term.push(function(command) {
       if ( command.match(/^(b|buy)$/i) ) {
         trade(term, npc, buy, 'buy');
       }
       else if ( command.match(/^(s|sell)$/i) ) {
-        trade(term, npc, sell, 'buy');
+        trade(term, npc, sell, 'sell');
       }
       else if ( command.match(/^(v|valentine)$/i) ) {
         valentine(term, npc);

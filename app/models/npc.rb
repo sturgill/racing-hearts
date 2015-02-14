@@ -10,8 +10,8 @@
 class Npc
   attr_reader :id, :name, :town, :buy, :sell, :valentine
 
-  def initialize(attrs, town)
-    @id = attrs['id']
+  def initialize(id, attrs, town)
+    @id = id
     @name = attrs['name']
     @town = town
     @buy = attrs['buy']
@@ -48,6 +48,7 @@ class Npc
 
   def buy_from_user(user, thing, number)
     number = number.to_i
+    return false if user[thing] < number
     cost = (price_to_sell_to(thing) * 100).to_i
     User.transaction do
       User.where(id: user.id).update_all("#{thing} = #{thing} - #{number}, hearts_cents = hearts_cents + #{cost}")
