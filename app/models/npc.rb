@@ -10,8 +10,8 @@
 class Npc
   attr_reader :id, :name, :town, :buy, :sell, :valentine
 
-  def initialize(attrs, town)
-    @id = attrs['id']
+  def initialize(id, attrs, town)
+    @id = id
     @name = attrs['name']
     @town = town
     @buy = attrs['buy']
