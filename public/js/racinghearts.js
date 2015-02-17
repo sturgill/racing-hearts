@@ -66,7 +66,8 @@ var game = function() {
     term.echo('[S]TAT\n\tDisplay your current inventory\n'+
               '[T]ALK\n\tDisplay a list of every person in the town you are in\n'+
               'T[R]AVEL\n\tTravel to a destination attached to your current town\n'+
-              '[C]LEAR\n\tClear this terminal');
+              '[C]LEAR\n\tClear this terminal\n'+
+              'RESTART\n\tRestarted your adventure');
   };
 
   function updateStats(term, callback){
@@ -120,15 +121,16 @@ var game = function() {
       if ( Math.floor(command) == command && $.isNumeric(command) )
       {
         server('talk/' + action + '/' + id, {type: type, amount: command}, term, function(data) {
-          term.pop();
-          term.pop();
-          term.pop();
-          term.pop();
+          term.pop(); // price
+          term.pop(); // buy sell
+          term.pop(); // npc talk
+          term.pop(); // list of npcs
           start(term);
         });
       }
       else if ( command.match(/^(b|back)$/i) ) {
-        term.pop();
+        term.pop(); // buy sell
+        term.echo('Please select an item to ' + action);
       }
       else {
         term.echo('Error, ' + command + ' is not a valid option');
@@ -170,8 +172,9 @@ var game = function() {
         amount(term, 'jewels', npc.id, action);
       }
       else if ( command.match(/^(l|leave)$/i) ) {
-        term.pop();
-        term.pop();
+        term.pop(); // buy sell
+        term.pop(); // npc talk
+        term.pop(); // list of npcs
         start(term);
       }
       else {
@@ -234,8 +237,8 @@ var game = function() {
     function help(term) {
       term.echo('[B]UY\n\tBuy items for hearts\n'+
       '[S]ELL\n\tSell items to gain hearts\n'+
-      '[V]ALENTINE\n\tAsk this person to be your valentine\n'+
-      '[L]EAVE\n\tLeave this person');
+      '[V]ALENTINE\n\tAsk ' + npc.name + ' to be your valentine\n'+
+      '[L]EAVE\n\tLeave ' + npc.name);
     }
 
     function notAvailable(term, command) {
@@ -258,8 +261,9 @@ var game = function() {
         help(term);
       }
       else if ( command.match(/^(l|leave)$/i) ) {
-        term.pop(); // go up one level
-        term.pop(); // go all the way to the top
+        term.echo('You have left ' + npc.name + '. They felt sad.');
+        term.pop(); // get out of the buy-sell terminal
+        term.pop(); // get out of the npcs terminal
         start(term);
       }
       else {
@@ -377,9 +381,18 @@ var game = function() {
     });
   }
 
+  function restart(term) {
+    term.echo('Restarting your adventure');
+    server(('restart'), {}, term, function(data) {
+      term.echo('Your adventure has been restartted!');
+      greetings(term);
+      stat(term);
+    });
+  }
+
   function invalid(term, command) {
     term.echo('Sorry, ' + command + ' is an invalid command. Type [H]ELP for commands.');
-  };
+  }
 
   function start(term) {
     term.echo('Please enter a command. Type [H]ELP for commands');
@@ -401,6 +414,9 @@ var game = function() {
       }
       else if ( command.match(/^(c|clear)$/i) ) {
         term.clear();
+      }
+      else if ( command.match(/^(restart)$/i) ) {
+        restart(term);
       }
       else {
         invalid(term, command);
