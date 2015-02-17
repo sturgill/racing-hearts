@@ -67,7 +67,7 @@ var game = function() {
               '[T]ALK\n\tDisplay a list of every person in the town you are in\n'+
               'T[R]AVEL\n\tTravel to a destination attached to your current town\n'+
               '[C]LEAR\n\tClear this terminal\n'+
-              'RESET\n\tReset your adventure');
+              'RESTART\n\tRestarted your adventure');
   };
 
   function updateStats(term, callback){
@@ -382,9 +382,9 @@ var game = function() {
   }
 
   function restart(term) {
-    term.echo('Resetting your adventure');
-    server(('reset'), {}, term, function(data) {
-      term.echo('Your adventure has been reset!');
+    term.echo('Restarting your adventure');
+    server(('restart'), {}, term, function(data) {
+      term.echo('Your adventure has been restartted!');
       greetings(term);
       stat(term);
     });
@@ -415,7 +415,7 @@ var game = function() {
       else if ( command.match(/^(c|clear)$/i) ) {
         term.clear();
       }
-      else if ( command.match(/^(reset)$/i) ) {
+      else if ( command.match(/^(restart)$/i) ) {
         restart(term);
       }
       else {
