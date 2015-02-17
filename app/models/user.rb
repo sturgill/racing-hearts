@@ -65,6 +65,6 @@ class User < ActiveRecord::Base
 
   def setup_resources
     self.current_town_identifier = World::ALL_TOWNS.keys.sample
-    self.hearts_cents = 50000
+    self.hearts_cents = 10000
   end
 end
