@@ -1,5 +1,5 @@
 class NpcsController < ApplicationController
-  before_index :set_npc, except: [:index]
+  before_filter :set_npc, except: [:index]
 
   def index
     render json: current_user.current_location.npcs.collect { |ncp| { id: ncp.id, name: ncp.name } }
