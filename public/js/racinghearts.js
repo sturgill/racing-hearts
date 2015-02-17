@@ -384,7 +384,7 @@ var game = function() {
   function restart(term) {
     term.echo('Restarting your adventure');
     server(('restart'), {}, term, function(data) {
-      term.echo('Your adventure has been restartted!');
+      term.echo('Your adventure has been restarted!');
       greetings(term);
       stat(term);
     });
