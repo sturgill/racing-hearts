@@ -67,7 +67,7 @@ var game = function() {
               '[T]ALK\n\tDisplay a list of every person in the town you are in\n'+
               'T[R]AVEL\n\tTravel to a destination attached to your current town\n'+
               '[C]LEAR\n\tClear this terminal\n'+
-              'RESTART\n\tRestarted your adventure');
+              'RESTART\n\tRestart your adventure');
   };
 
   function updateStats(term, callback){
@@ -384,7 +384,7 @@ var game = function() {
   function restart(term) {
     term.echo('Restarting your adventure');
     server(('restart'), {}, term, function(data) {
-      term.echo('Your adventure has been restartted!');
+      term.echo('Your adventure has been restarted!');
       greetings(term);
       stat(term);
     });
