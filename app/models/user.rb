@@ -57,6 +57,11 @@ class User < ActiveRecord::Base
     self.hearts = self.hearts + Money.new(amount * 100, "USD")
   end
 
+  def restart!
+    setup_resources
+    save
+  end
+
   protected
 
   def generate_uuid
@@ -66,5 +71,11 @@ class User < ActiveRecord::Base
   def setup_resources
     self.current_town_identifier = World::ALL_TOWNS.keys.sample
     self.hearts_cents = 10000
+    self.perfumes = 0
+    self.roses = 0
+    self.chocolates = 0
+    self.silks = 0
+    self.jewels = 0
+    self.valentine_identifier = nil
   end
 end

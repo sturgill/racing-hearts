@@ -9,6 +9,7 @@ class TownsController < ApplicationController
     if current_user.valid_destinations.collect{ |d| d[:id].upcase }.include?(town_id)
       message, dead = current_user.initiate_travel_event(town_id)
       if dead
+        current_user.restart!
         render json: {:status => "error", :message => message + "\nYou have run out of hearts! Game over!"}
       else
         render json: {:status => "ok", :message => message}

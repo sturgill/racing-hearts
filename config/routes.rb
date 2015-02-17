@@ -13,4 +13,6 @@ Rails.application.routes.draw do
   get '/talk/sell/:id' => 'npcs#sell'
   get '/talk/requirements/:id' => 'npcs#requirements'
   get '/talk/valentines/:id' => 'npcs#valentines'
+
+  get '/restart' => 'users#restart'
 end
