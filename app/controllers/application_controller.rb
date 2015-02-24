@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::API
   before_filter :require_authentication
+  force_ssl if: :is_production?
   
   protected
 
@@ -17,5 +18,9 @@ class ApplicationController < ActionController::API
   def identify_user
     return nil if params[:uuid].blank?
     User.where(uuid: params[:uuid]).first
+  end
+
+  def is_production?
+    Rails.env.production?
   end
 end
